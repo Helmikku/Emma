@@ -6,19 +6,19 @@ class Page extends ApplicationComponent {
 	protected $vars = array();
 	public function setContentFile($contentFile) {
 		if (!is_string($contentFile) || empty($contentFile)) {
-			throw new \InvalidArgumentException('La vue spécifiée est invalide');
+			throw new \InvalidArgumentException('Invalid page content file');
 		}
 		$this->contentFile = $contentFile;
 	}
-	public function addVar($var, $value) {
-		if (!is_string($var) || is_numeric($var) || empty($var)) {
-			throw new \InvalidArgumentException('Le nom de la variable doit être une chaine de caractère non nulle');
+	public function addVar($key, $value) {
+		if (!is_string($key) || is_numeric($key) || empty($key)) {
+			throw new \InvalidArgumentException('Invalid page var');
 		}
-		$this->vars[$var] = $value;
+		$this->vars[$key] = $value;
 	}
 	public function getGeneratedPage() {
 		if (!file_exists($this->contentFile)) {
-			throw new \RuntimeException('La vue spécifiée n\'existe pas');
+			throw new \RuntimeException('Invalid page content file');
 		}
 		$user = $this->app->user();
 		extract($this->vars);

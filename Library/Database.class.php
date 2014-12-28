@@ -17,14 +17,14 @@ class Database extends ApplicationComponent {
 	public function dao() {
 		return $this->dao;
 	}
-	public function getModelOf($module) {
-		if (!is_string($module) || empty($module)) {
-			throw new \InvalidArgumentException('Le module spécifié est invalide');
+	public function getModelOf($class) {
+		if (!is_string($class) || empty($class)) {
+			throw new \InvalidArgumentException('Invalid class');
 		}
-		if (!isset($this->models[$module])) {
-			$model = '\\Library\\Models\\'.$module.'Model_'.$this->api;
-			$this->models[$module] = new $model($this->dao);
+		if (!isset($this->models[$class])) {
+			$model = '\\Library\\Models\\'.$class.'Model_'.$this->api;
+			$this->models[$class] = new $model($this->dao);
 		}
-		return $this->models[$module];
+		return $this->models[$class];
 	}
 }

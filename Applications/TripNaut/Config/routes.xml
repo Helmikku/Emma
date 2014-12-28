@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<routes>
-	<route url="/" module="World" action="index" />
-	<route url="/countries/([0-9]+)/.+" module="World" action="country" vars="id" />
-	<route url="/trips" module="Trips" action="index" />
-	<route url="/trips/([0-9]+)" module="Trips" action="show" vars="id" />
-	<route url="/trips/([0-9]+)/edition" module="Trips" action="edition" vars="id" />
-</routes>

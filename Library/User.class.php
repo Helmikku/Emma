@@ -4,7 +4,11 @@ namespace Library;
 session_start();
 
 class User extends ApplicationComponent {
-	protected $id, $login, $email, $signup_time, $login_time, $rank;
+	protected $id;
+	protected $login;
+	protected $email;
+	protected $signup_time;
+	protected $login_time;
 	public function __construct(Application $app) {
 		parent::__construct($app);
 		if ($this->connected()) {
@@ -13,19 +17,6 @@ class User extends ApplicationComponent {
 			$this->email = $_SESSION['email'];
 			$this->signup_time = $_SESSION['signup_time'];
 			$this->login_time = $_SESSION['login_time'];
-			$this->rank = $_SESSION['rank'];
-		} elseif (isset($_COOKIE['login']) && isset($_COOKIE['password'])) {
-			$login = $_COOKIE['login'];
-			$password = $_COOKIE['password'];
-			$nauts = $this->app->database()->getModelOf('Nauts');
-			if ($naut = $nauts->login($login, $password)) {
-				$this->id = $naut->id();
-				$this->login = $naut->login();
-				$this->email = $naut->email();
-				$this->signup_time = $naut->signup_time();
-				$this->login_time = $naut->login_time();
-				$this->rank = $naut->rank();
-			}
 		}
 	}
 	public function id() {
@@ -42,9 +33,6 @@ class User extends ApplicationComponent {
 	}
 	public function login_time() {
 		return $this->login_time;
-	}
-	public function rank() {
-		return $this->rank;
 	}
 	public function connected() {
 		return (isset($_SESSION['connected']) && $_SESSION['connected'] === true);

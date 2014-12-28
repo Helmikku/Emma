@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <routes>
-	<route url="/api/login" module="Nauts" action="login" />
-	<route url="/api/signup" module="Nauts" action="signup" />
-	<route url="/api/trips/comment" module="Trips" action="comment" />
-	<route url="/api/trips/create" module="Trips" action="create" />
-	<route url="/api/trips/get/comments" module="Trips" action="getComments" />
-	<route url="/api/trips/get/trip" module="Trips" action="getTrip" />
-	<route url="/api/trips/lock" module="Trips" action="lock" />
-	<route url="/api/trips/save" module="Trips" action="save" />
-	<route url="/api/trips/unlock" module="Trips" action="unlock" />
-	<route url="/api/world/get/points" module="World" action="getPoints" />
-	<route url="/api/world/search" module="World" action="search" />
+	<route url="/api/works/get.*" module="Works" action="Get" />
 </routes>

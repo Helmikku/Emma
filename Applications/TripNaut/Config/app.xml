@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<definitions>
-	<definition var="trips_number" value="5" />
-	<definition var="comments_number" value="10" />
-</definitions>

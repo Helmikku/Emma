@@ -1,5 +1,5 @@
 <?php
 require 'autoload.php';
 
-$app = new Applications\API\APIApplication;
+$app = new Library\Application('API');
 $app->run();

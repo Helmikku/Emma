@@ -1,6 +1,6 @@
 RewriteEngine On
 
+RewriteRule ^admin admin.php [QSA,L]
 RewriteRule ^api api.php [QSA,L]
-RewriteRule ^admin backend.php [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ frontend.php [QSA,L]
+RewriteRule ^(.*)$ index.html [QSA,L]

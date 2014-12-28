@@ -15,19 +15,19 @@ abstract class Controller extends ApplicationComponent {
 	}
 	public function setModule($module) {
 		if (!is_string($module) || empty($module)) {
-			throw new \InvalidArgumentException('Le module spécifié est invalide');
+			throw new \InvalidArgumentException('Invalid controller module');
 		}
 		$this->module = $module;
 	}
 	public function setAction($action) {
 		if (!is_string($action) || empty($action)) {
-			throw new \InvalidArgumentException('L\'action spécifiée est invalide');
+			throw new \InvalidArgumentException('Invalid controller action');
 		}
 		$this->action = $action;
 	}
 	public function setView($view) {
 		if (!is_string($view) || empty($view)) {
-			throw new \InvalidArgumentException('La vue spécifiée est invalide');
+			throw new \InvalidArgumentException('Invalid controller view');
 		}
 		$this->view = $view;
 		$this->page->setContentFile(__DIR__.'/../Applications/'.$this->app->name().'/Modules/'.$this->module.'/Views/'.$this->view.'.php');
@@ -35,10 +35,10 @@ abstract class Controller extends ApplicationComponent {
 	public function page() {
 		return $this->page;
 	}
-	public function execute() {
-		$method = 'execute'.ucfirst($this->action);
+	public function run() {
+		$method = 'run'.$this->action;
 		if (!is_callable(array($this, $method))) {
-			throw new \RuntimeException('L\'action "'.$this->action.'" n\'est pas définie pour ce module');
+			throw new \RuntimeException('Undefined controller action');
 		}
 		$this->$method($this->app->httpRequest());
 	}
