@@ -3,4 +3,4 @@ RewriteEngine On
 RewriteRule ^admin admin.php [QSA,L]
 RewriteRule ^api api.php [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.html [QSA,L]
+RewriteRule ^(.*)$ home.html [QSA,L]
