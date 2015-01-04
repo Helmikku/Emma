@@ -7,18 +7,17 @@ class WorksModel_PDO extends WorksModel {
 		$query->bindValue(':id', $work_id, \PDO::PARAM_INT);
 		$query->execute();
 		$query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Library\Objects\Work');
-		if ($work = $query->fetch()) {
+		$works = $query->fetchAll();
+		foreach ($works as $work) {
 			$work->setDate(new \DateTime($work->date()));
-			$query->closeCursor();
-			return [$work];
 		}
 		$query->closeCursor();
-		return null;
+		return $works;
 	}
-	public function getWorksList($filters, $page_number = 0, $page_size = 0) {
-		$sql = 'SELECT id, title, teaser, thumbnails, date, collection_id FROM works ORDER BY date DESC';
+	public function getWorksList($filters = [], $page_number = 0, $page_size = 0) {
+		$sql = 'SELECT * FROM works ORDER BY date DESC';
 		if (isset($filters['collection_id'])) {
-			$sql .= 'WHERE collection_id = '.(int) $filters['collection_id'];
+			$sql .= ' WHERE collection_id = '.(int) $filters['collection_id'];
 		}
 		if ($page_number > 0 || $page_size > 0) {
 			$limit = $page_size;

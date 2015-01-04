@@ -5,16 +5,24 @@
 // ----------------------------------------------------------------------------------------------------- //
 
 
+
+if (typeof String.prototype.trim !== 'function') {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, ''); 
+	};
+}
+
 if (typeof Emma == 'undefined') {
 	var Emma = {};
 }
 
 Emma.Config = {
-	FILTER: 'hoho',
-	HUMBER: 10
+	FILTER: 'hoho'
 };
 
 Emma.Core = {
+	LOADING: document.getElementById('loading'),
+	SECTION: null,
 	addEvent: function(element, event, handler) {
 		if (element.addEventListener) {
 			element.addEventListener(event, handler, false);
@@ -72,6 +80,61 @@ Emma.Core = {
 		var now = new Date();
 		now.setTime(now.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
 		document.cookie = name + '=' + value + '; expires=' + now.toGMTString() + '; path=/';
+	},
+	showSection: function(section) {
+		if (Emma.Core.SECTION !== null) {
+			Emma.Core.SECTION.style.display = 'none';
+		}
+		Emma.Core.SECTION = section;
+		Emma.Core.SECTION.style.display = 'block';
+	}
+};
+
+Emma.Exhibitions = {
+	LIST: [],
+	SECTION: document.getElementById('exhibitions_section'),
+	show: function() {
+		Emma.Core.showSection(Emma.Exhibitions.SECTION);
+	}
+};
+
+Emma.Me = {
+	SECTION: document.getElementById('me_section'),
+	show: function() {
+		Emma.Core.showSection(Emma.Me.SECTION);
+	}
+};
+
+Emma.Works = {
+	LIST: [],
+	SECTION: document.getElementById('works_section'),
+	init: function() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var response = JSON.parse(xhr.responseText);
+				if (response.success) {
+					Emma.Works.SECTION.innerHTML = '';
+					for (var i = 0; i < response.works.length; i++) {
+						var work = new Work (response.works[i]);
+						Emma.Works.SECTION.appendChild(work.outlines());
+					}
+				} else {
+					console.log(response);
+				}
+				Emma.Core.LOADING.style.display = 'none';
+			} else if (xhr.readyState < 4) {
+				Emma.Core.LOADING.style.display = 'block';
+			}
+		};
+		xhr.open('GET', '/api/works/init', true);
+		xhr.send();
+	},
+	show: function() {
+		if (Emma.Works.LIST.length === 0) {
+			Emma.Works.init();
+		}
+		Emma.Core.showSection(Emma.Works.SECTION);
 	}
 };
 
@@ -81,25 +144,33 @@ Emma.Core = {
 // ----------------------------------------------------------------------------------------------------- //
 
 
-function Work (id, title, teaser, body, thumbnails, images, date, collection_id) {
-	this.id = id;
-	this.title = title;
-	this.teaser = teaser;
-	this.body = body;
-	this.thumbnails = thumbnails;
-	this.images = images;
-	this.date = date;
-	this.collection_id = collection_id;
+function Work (data) {
+	this.id = data.hasOwnProperty('id') ? data.id : null;
+	this.title = data.hasOwnProperty('title') ? data.title : null;
+	this.teaser = data.hasOwnProperty('teaser') ? data.teaser : null;
+	this.body = data.hasOwnProperty('body') ? data.body : null;
+	this.thumbnails = data.hasOwnProperty('thumbnails') ? data.thumbnails.split(',') : [];
+	this.images = data.hasOwnProperty('images') ? data.images.split(',') : [];
+	this.date = data.hasOwnProperty('date') ? data.date : null;
+	this.collection_id = data.hasOwnProperty('collection_id') ? data.collection_id : null;
+	for (var i = 0; i < this.thumbnails.length; i++) {
+		this.thumbnails[i] = Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.thumbnails[i]}, {name: 'title', value: this.title}], [], false)
+	}
+	for (var i = 0; i < this.images.length; i++) {
+		this.images[i] = Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.images[i]}, {name: 'title', value: this.title}], [], false)
+	}
 }
 
 
 Work.prototype.outlines = function() {
 	var handler
 	return Emma.Core.createElement('div', [{name: 'class', value: 'outlines'}], [
-		Emma.Core.createElement('h2', [], [document.createTextNode(this.title)], false),
-		Emma.Core.createElement('h2', [], [document.createTextNode(this.title)], false),
-		Emma.Core.createElement('p', [], [document.createTextNode(this.teaser)], false)
-	], true, 'click', (function() {});
+		this.thumbnails[0],
+		Emma.Core.createElement('div', [{name: 'class', value: 'outlines'}], [
+			Emma.Core.createElement('h2', [], [document.createTextNode(this.title)], false),
+			Emma.Core.createElement('p', [], [document.createTextNode(this.teaser)], false)
+		], false)
+	], true, 'click', (function() {}));
 }
 
 
@@ -121,9 +192,9 @@ function loadThreads(loader,loading,display,list,page,brands_id,brands_ideas_num
 	}
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
-			var responseJSON = JSON.parse(xhr.responseText);
-			if (responseJSON.response.status == 'success') {
-				var threads = (typeof(responseJSON.response.threads.thread.length) != 'undefined') ? responseJSON.response.threads.thread : [responseJSON.response.threads.thread];
+			var response = JSON.parse(xhr.responseText);
+			if (response.response.status == 'success') {
+				var threads = (typeof(response.response.threads.thread.length) != 'undefined') ? response.response.threads.thread : [response.response.threads.thread];
 				for (var i = 0;i < threads.length;i++) {
 					var thread = new Thread (new Topic (threads[i].id,threads[i].subject,threads[i].view_href,threads[i].teaser,threads[i].body,threads[i].post_time.date,new Ctop (threads[i].ctop.count,threads[i].ctop.status,threads[i].ctop.givers_href),threads[i].replies,new User(threads[i].author.id,threads[i].author.login,threads[i].author.avatar,threads[i].author.ranking_id,threads[i].author.ranking_name,threads[i].author.ranking_image_left,threads[i].author.ranking_image_right,threads[i].author.ranking_color),threads[i].board.id,threads[i].board.title,threads[i].section.brand.id,threads[i].section.brand.name,threads[i].section.type,threads[i].label.id,threads[i].label.text,threads[i].status.key,threads[i].status.name),[],[],[],display);
 					var element = Emma.Core.createElement('div',[{name:'class', value:'minimized thread'}],[],false);
@@ -301,9 +372,9 @@ function loadThreads(loader,loading,display,list,page,brands_id,brands_ideas_num
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					loading.style.display = 'none';
-					var responseJSON = JSON.parse(xhr.responseText);
-					if (responseJSON.response.status == 'success') {
-						var replies = (typeof(responseJSON.response.replies.reply.length) != 'undefined') ? responseJSON.response.replies.reply : [responseJSON.response.replies.reply];
+					var response = JSON.parse(xhr.responseText);
+					if (response.response.status == 'success') {
+						var replies = (typeof(response.response.replies.reply.length) != 'undefined') ? response.response.replies.reply : [response.response.replies.reply];
 						for (var i = 0;i < replies.length;i++) {
 							if (i > repliesToSqueeze) {
 								_this.replies.push(new Reply(replies[i].id,replies[i].body,replies[i].post_time.date.slice(0,10),new User(replies[i].author.id,replies[i].author.login,replies[i].author.avatar,replies[i].author.ranking_id,replies[i].author.ranking_name,replies[i].author.ranking_image_left,replies[i].author.ranking_image_right,replies[i].author.ranking_color,null,null)));
@@ -329,20 +400,20 @@ function loadThreads(loader,loading,display,list,page,brands_id,brands_ideas_num
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				loading.style.display = 'none';
-				var responseJSON = JSON.parse(xhr.responseText);
-				if (responseJSON.response.status == 'success') {
+				var response = JSON.parse(xhr.responseText);
+				if (response.response.status == 'success') {
 					if (_this.display == 'thumbnail') {
-						window.location = responseJSON.response.message.view_href;
+						window.location = response.response.message.view_href;
 					} else {
 						var element = Emma.Core.createElement('div',[{name:'class', value:'reply lia-panel-message'}],[],false);
-						var reply = new Reply (responseJSON.response.message.id.$,responseJSON.response.message.body.$,Emma.Core.formatDate(new Date()),user);
+						var reply = new Reply (response.response.message.id.$,response.response.message.body.$,Emma.Core.formatDate(new Date()),user);
 						_this.topic.replies += 1;
 						_this.replies.unshift(reply);
 						reply.build(element);
 						list.appendChild(element);
 						reply_input.value = '';
 						var xhread = new XMLHttpRequest();
-						xhread.open('POST','/restapi/vc/messages/id/' + responseJSON.response.message.id.$ + '/read/mark',true);
+						xhread.open('POST','/restapi/vc/messages/id/' + response.response.message.id.$ + '/read/mark',true);
 						xhread.send();
 					}
 				} else {
@@ -560,8 +631,8 @@ function loadThreads(loader,loading,display,list,page,brands_id,brands_ideas_num
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					var responseJSON = JSON.parse(xhr.responseText);
-					if (responseJSON.response.status == 'success') {
+					var response = JSON.parse(xhr.responseText);
+					if (response.response.status == 'success') {
 						loading.style.display = 'none';
 						handler();
 					} else {
@@ -696,18 +767,18 @@ function loadThreads(loader,loading,display,list,page,brands_id,brands_ideas_num
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
-					var responseJSON = JSON.parse(xhr.responseText);
-					if (responseJSON.response.status == 'success') {
-						_this.topic.id = responseJSON.response.message.id.$;
-						_this.topic.view_href = responseJSON.response.message.view_href.replace('http://www.cvous.com','');
+					var response = JSON.parse(xhr.responseText);
+					if (response.response.status == 'success') {
+						_this.topic.id = response.response.message.id.$;
+						_this.topic.view_href = response.response.message.view_href.replace('http://www.cvous.com','');
 						_this.topic.date = Emma.Core.formatDate(new Date());
-						_this.topic.ctop.givers_href = '/t5/kudos/messagepage/board-id/' + _this.topic.board_id + '/message-id/' + responseJSON.response.message.board_id.$ + '/tab/all-users';
-						if (responseJSON.response.message.labels) {
-							_this.topic.label_id = responseJSON.response.message.labels.label.id.$;
+						_this.topic.ctop.givers_href = '/t5/kudos/messagepage/board-id/' + _this.topic.board_id + '/message-id/' + response.response.message.board_id.$ + '/tab/all-users';
+						if (response.response.message.labels) {
+							_this.topic.label_id = response.response.message.labels.label.id.$;
 						}
-						if (responseJSON.response.message.message_status) {
-							_this.topic.status_key = responseJSON.response.message.message_status.key.$;
-							_this.topic.status_name = responseJSON.response.message.message_status.name.$;
+						if (response.response.message.message_status) {
+							_this.topic.status_key = response.response.message.message_status.key.$;
+							_this.topic.status_name = response.response.message.message_status.name.$;
 						}
 						var thread = new Thread (_this.topic,[],[],[]);
 						var element = Emma.Core.createElement('div',[{name:'class', value:'minimized thread'}],[],false);

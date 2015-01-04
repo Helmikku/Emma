@@ -8,7 +8,7 @@
 #emma #header #nav ul li {display: inline-block; margin: 0 10px; cursor: pointer;}
 #emma #header #nav ul li span {line-height: 70px; font-size: 36px; font-family: Arial; color: #000000;}
 #emma #section {max-width: 960px; margin: 100px auto;}
-#emma #section > div {margin: 0 0 30px; background-color: #ffffff; box-shadow: 0 0 5px 0 #cccccc;}
+#emma #section > div {display: none; margin: 0 0 30px; background-color: #ffffff; box-shadow: 0 0 5px 0 #cccccc;}
 #emma #section > div.list > div {float: left; width: 25%; height: 240px;}
 #emma #section > div.work > div {}
 

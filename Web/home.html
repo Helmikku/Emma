@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8" />
 		<title>Emma Perrochon</title>
+		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="/style/emma.css">
 	</head>
 	<body id="emma">
 		<header id="header">
 			<nav id="nav">
 				<ul>
-					<li id="works_nav">
+					<li id="works_nav" onclick="Emma.Works.show();">
 						<span>Works</span>
 					</li>
-					<li id="exhibitions_nav">
+					<li id="exhibitions_nav" onclick="Emma.Exhibitions.show();">
 						<span>Exhibitions</span>
 					</li>
-					<li id="about_me_nav">
+					<li id="me_nav" onclick="Emma.Me.show();">
 						<span>About me</span>
 					</li>
 				</ul>
 			</nav>
 		</header>
 		<section id="section">
-			<div id="works_section">
-				<p>One paragraph</p>
+			<div id="loading"></div>
+			<div id="works_section"></div>
+			<div id="exhibitions_section">
+				<h1>En construction</h1>
 			</div>
-			<div id="exhibitions_section"></div>
-			<div id="about_me_section"></div>
+			<div id="me_section">
+				<h1>Me</h1>
+				<p>One paragraph about me.</p>
+			</div>
 		</section>
 		<footer id="footer"></footer>
-		<script type="text/javascript"></script>
+		<script src="/scripts/emma.js"></script>
+		<script>
+			// ok
+		</script>
 	</body>
 </html>
