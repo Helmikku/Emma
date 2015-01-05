@@ -2,23 +2,23 @@
 namespace Library\Objects;
 
 class Work extends \Library\Object {
-	public $title, $teaser, $body, $thumbnails, $images, $date, $collection_id;
+	public $title, $caption, $description, $thumbnails, $images, $date, $collection_id;
 	public function setTitle($title) {
 		$title = htmlspecialchars($title);
 		if (!empty($title) && is_string($title)) {
 			$this->title = $title;
 		}
 	}
-	public function setTeaser($teaser) {
-		$teaser = htmlspecialchars($teaser);
-		if (!empty($teaser) && is_string($teaser)) {
-			$this->teaser = $teaser;
+	public function setCaption($caption) {
+		$caption = htmlspecialchars($caption);
+		if (!empty($caption) && is_string($caption)) {
+			$this->caption = $caption;
 		}
 	}
-	public function setBody($body) {
-		$body = htmlspecialchars($body);
-		if (!empty($body) && is_string($body)) {
-			$this->body = $body;
+	public function setDescription($description) {
+		$description = htmlspecialchars($description);
+		if (!empty($description) && is_string($description)) {
+			$this->description = $description;
 		}
 	}
 	public function setThumbnails($thumbnails) {
@@ -44,11 +44,11 @@ class Work extends \Library\Object {
 	public function title() {
 		return $this->title;
 	}
-	public function teaser() {
-		return $this->teaser;
+	public function caption() {
+		return $this->caption;
 	}
-	public function body() {
-		return $this->body;
+	public function description() {
+		return $this->description;
 	}
 	public function thumbnails() {
 		return $this->thumbnails;
@@ -63,6 +63,6 @@ class Work extends \Library\Object {
 		return $this->collection_id;
 	}
 	public function isValid() {
-		return !(empty($this->title) || empty($this->teaser) || empty($this->thumbnails) || empty($this->date) || empty($this->collection_id));
+		return !(empty($this->title) || empty($this->caption) || empty($this->thumbnails) || empty($this->date) || empty($this->collection_id));
 	}
 }

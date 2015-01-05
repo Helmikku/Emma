@@ -9,14 +9,17 @@
 #emma #header #nav ul li span {line-height: 70px; font-size: 36px; font-family: Arial; color: #000000;}
 #emma #section {max-width: 960px; margin: 100px auto;}
 #emma #section > div {display: none; margin: 0 0 30px; background-color: #ffffff; box-shadow: 0 0 5px 0 #cccccc;}
-#emma #section > div.list > div {float: left; width: 25%; height: 240px;}
-#emma #section > div.work > div {}
+#emma #section > div #works_summary {padding: 15px;}
+#emma #section > div .outlines {float: left; position: relative; width: 25%; height: 180px;}
+#emma #section > div .outlines .caption {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 5%; background-color: rgba(255, 255, 255, 0.5);}
+#emma #section > div .outlines:hover .caption {display: block;}
+.clear {clear: both;}
 
 /* Textes */
 
-h1 {font-size: 36px; font-family: Arial; color: #000000;}
-h2 {font-size: 24px; font-family: Arial; color: #ca139f;}
-p {font-size: 16px; font-family: Arial; color: #555555;}
+h1 {font-size: 24px; font-family: Arial; color: #000000;}
+h2 {font-size: 18px; font-family: Arial; color: #ca139f;}
+p {font-size: 14px; font-family: Arial; color: #555555;}
 
 
 /* Divers */
