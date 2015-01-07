@@ -6,40 +6,41 @@
 		<link rel="stylesheet" type="text/css" href="/style/emma.css">
 	</head>
 	<body id="emma">
-		<header id="header">
-			<nav id="nav">
+		<header id="header" class="header">
+			<nav id="nav" class="nav">
 				<ul>
-					<li id="works_nav" onclick="Emma.Works.show();">
+					<li id="works_tab" class="tab" onclick="Emma.Works.show();">
 						<span>Works</span>
 					</li>
-					<li id="exhibitions_nav" onclick="Emma.Exhibitions.show();">
+					<li id="exhibitions_tab" class="tab" onclick="Emma.Exhibitions.show();">
 						<span>Exhibitions</span>
 					</li>
-					<li id="me_nav" onclick="Emma.Me.show();">
+					<li id="me_tab" class="tab" onclick="Emma.Me.show();">
 						<span>About me</span>
 					</li>
 				</ul>
 			</nav>
-		</header>
-		<section id="section">
 			<div id="loading"></div>
-			<div id="works_section">
-				<div id="works_summary">
-					<h1>My works</h1>
-					<p>Bla bla bla bla bla.</p>
-				</div>
-				<div id="works_list"></div>
-				<div class="clear"></div>
-			</div>
-			<div id="exhibitions_section">
+		</header>
+		<section id="works" class="section">
+			<article id="works_summary" class="summary"></article>
+			<article id="works_article" class="article"></article>
+		</section>
+		<section id="exhibitions" class="section">
+			<article id="exhibitions_summary" class="summary">
 				<h1>En construction</h1>
-			</div>
-			<div id="me_section">
+				<p>I'm currently working on this section. Please be patient ;-)</p>
+			</article>
+			<article id="exhibitions_article" class="article"></article>
+		</section>
+		<section id="me" class="section">
+			<article id="me_summary" class="summary">
 				<h1>Me</h1>
 				<p>One paragraph about me.</p>
-			</div>
+			</article>
+			<article id="me_article" class="article"></article>
 		</section>
-		<footer id="footer"></footer>
+		<footer id="footer" class="footer"></footer>
 		<script src="/scripts/emma.js"></script>
 		<script>
 			// ok
