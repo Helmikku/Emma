@@ -11,6 +11,10 @@ if (typeof Emma == 'undefined') {
 }
 
 Emma.Config = {
+	IMAGE: {
+		HEIGHT: 540,
+		WIDTH: 720
+	},
 	WORKS: {
 		TITLE: 'My works',
 		INTRODUCTION: 'Please take a look of my works. They are sorted from the most recent one to the last'
@@ -67,6 +71,15 @@ Emma.Core = {
 			return number;
 		}
 	},
+	h1: function(text) {
+		return Emma.Core.createElement('h1', [], [document.createTextNode(text)], false);
+	},
+	h2: function(text) {
+		return Emma.Core.createElement('h2', [], [document.createTextNode(text)], false);
+	},
+	p: function(text) {
+		return Emma.Core.createElement('p', [], [document.createTextNode(text)], false);
+	},
 	showArticle: function() {
 		Emma.Core.MODULE.SUMMARY.style.display = 'none';
 		Emma.Core.MODULE.ARTICLE.style.display = 'block';
@@ -121,8 +134,8 @@ Emma.Works = {
 				var response = JSON.parse(xhr.responseText);
 				if (response.success) {
 					Emma.Core.emptyElement(Emma.Works.SUMMARY);
-					Emma.Works.SUMMARY.appendChild(Emma.Core.createElement('h1', [], [document.createTextNode(Emma.Config.WORKS.TITLE)], false));
-					Emma.Works.SUMMARY.appendChild(Emma.Core.createElement('p', [], [document.createTextNode(Emma.Config.WORKS.INTRODUCTION)], false));
+					Emma.Works.SUMMARY.appendChild(Emma.Core.h1(Emma.Config.WORKS.TITLE));
+					Emma.Works.SUMMARY.appendChild(Emma.Core.p(Emma.Config.WORKS.INTRODUCTION));
 					for (var i = 0; i < response.works.length; i++) {
 						var work = new Work (response.works[i]);
 						Emma.Works.LIST.push(work);
@@ -169,20 +182,16 @@ function Work (data) {
 }
 
 
-Work.prototype.show = function() {
-	var work = this;
-	Emma.Core.emptyElement(Emma.Works.ARTICLE);
-	Emma.Works.ARTICLE.appendChild(
-		Emma.Core.createElement('div', [{name: 'class', value: 'work'}], [
-			Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
-				Emma.Core.createElement('h1', [], [document.createTextNode(this.title)], false),
-				Emma.Core.createElement('p', [], [document.createTextNode(this.caption)], false)
-			], false),
-			Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.images[0]}, {name: 'title', value: this.title}], [], false)
-		], false)
-	);
-	Emma.Core.showArticle();
-}
+Work.prototype.article = function() {
+	return Emma.Core.createElement('div', [{name: 'class', value: 'work'}], [
+		Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
+			Emma.Core.h1(this.title),
+			Emma.Core.p(this.caption)
+		], false),
+		this.slider(),
+		Emma.Core.p(this.description)
+	], false);
+};
 
 
 Work.prototype.overview = function() {
@@ -190,8 +199,41 @@ Work.prototype.overview = function() {
 	return Emma.Core.createElement('div', [{name: 'class', value: 'work'}], [
 		Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.thumbnails[0]}, {name: 'title', value: this.title}], [], false),
 		Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
-			Emma.Core.createElement('h2', [], [document.createTextNode(this.title)], false),
-			Emma.Core.createElement('p', [], [document.createTextNode(this.caption)], false)
+			Emma.Core.h2(this.title),
+			Emma.Core.p(this.caption)
 		], false)
-	], true, 'click', (function() {work.show();}));
-}
+	], true, 'click', (function() { work.show(); }));
+};
+
+
+Work.prototype.show = function() {
+	Emma.Core.emptyElement(Emma.Works.ARTICLE);
+	Emma.Works.ARTICLE.appendChild(this.article());
+	Emma.Core.showArticle();
+};
+
+
+Work.prototype.slider = function() {
+	var work = this;
+	var images = [Emma.Core.createElement('div', [{name: 'style', value: 'height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false)];
+	var thumbnails = [];
+	for (var i = 0; i < this.thumbnails.length; i++) {
+		(function(i) {
+			images[0].appendChild(
+				Emma.Core.createElement('div', [{name: 'class', value: 'image'}], [
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.images[i]}, {name: 'title', value: i + 1}], [], false)
+				], false)
+			);
+			thumbnails.push(
+				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail'}], [
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false)
+				], true, 'click', (function() { images[0].style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px'; }))
+			);
+		})(i);
+	}
+	return Emma.Core.createElement('div', [{name: 'class', value: 'slider'}], [
+		Emma.Core.createElement('div', [{name: 'class', value: 'images'}], images, false),
+		Emma.Core.createElement('div', [{name: 'class', value: 'thumbnails'}], thumbnails, false)
+	], false);
+};
+
