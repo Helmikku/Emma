@@ -16,7 +16,7 @@
 #emma .section .slider .images {position: absolute; top: 0; right: 0; bottom: 0; width: 720px; overflow: hidden;}
 #emma .section .slider .images > div {position: absolute; right: 0; left: 0; transition: top 0.6s; -moz-transition: top 0.6s; -webkit-transition: top 0.6s;}
 #emma .section .slider .images .image img {display: block;}
-#emma .section .slider .thumbnails {position: absolute; top: 0; bottom: 0; left: 0; width: 240px;}
+#emma .section .slider .thumbnails {position: absolute; top: 0; bottom: 0; left: 0; width: 240px; overflow-y: auto;}
 #emma .section .slider .thumbnails .thumbnail {height: 172px; width: 228px; margin-bottom: 12px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .clear {clear: both;}
 
