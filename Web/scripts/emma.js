@@ -220,12 +220,12 @@ Work.prototype.slider = function() {
 	for (var i = 0; i < this.thumbnails.length; i++) {
 		(function(i) {
 			images[0].appendChild(
-				Emma.Core.createElement('div', [{name: 'class', value: 'image'}], [
+				Emma.Core.createElement('div', [{name: 'class', value: 'image n' + i}], [
 					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.images[i]}, {name: 'title', value: i + 1}], [], false)
 				], false)
 			);
 			thumbnails.push(
-				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail'}], [
+				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail n' + i}], [
 					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false)
 				], true, 'click', (function() { images[0].style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px'; }))
 			);
