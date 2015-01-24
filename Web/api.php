@@ -1,5 +1,9 @@
 <?php
-require 'autoload.php';
+function autoload($class) {
+	require('../'.str_replace('\\', '/', $class).'.php');
+}
+
+spl_autoload_register('autoload');
 
 $app = new Library\Application('API');
 $app->run();
