@@ -114,23 +114,15 @@ Emma.Exhibitions = {
 Emma.Facebook = {
 	connect: function() {
 		FB.getLoginStatus(function(response) {
-			if (response.status === 'connected') {
+			if (response.status == 'connected') {
 				console.log('Logged in.');
 			} else {
-				console.log('Not logged in');
-				FB.login(function(response) {
-					if (response.status === 'connected') {
-						// Logged into your app and Facebook.
-						console.log('connected');
-					} else if (response.status === 'not_authorized') {
-						// The person is logged into Facebook, but not your app.
-						console.log('not_authorized');
-					} else {
-						// The person is not logged into Facebook, so we're not sure if
-						// they are logged into this app or not.
-						console.log('else');
+				FB.Event.subscribe('auth.statusChange', function(response) {
+					if (response.status == 'connected') {
+						console.log('Logged in.');
 					}
 				});
+				FB.login();
 			}
 		});
 	},
@@ -138,6 +130,8 @@ Emma.Facebook = {
 		FB.init({
 			appId      : '1553833488197470',
 			cookie     : true,
+			oauth      : true,
+			status     : true,
 			version    : 'v2.2',
 			xfbml      : false
 		});

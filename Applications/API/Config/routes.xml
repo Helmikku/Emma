@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <routes>
+	<route url="/api/users/me.*" module="Users" action="Me" />
+	<route url="/api/users/signin.*" module="Users" action="SignIn" />
+	<route url="/api/users/signout.*" module="Users" action="SignOut" />
 	<route url="/api/works/get.*" module="Works" action="Get" />
 	<route url="/api/works/init" module="Works" action="Init" />
 </routes>

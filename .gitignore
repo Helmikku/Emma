@@ -1,4 +1,4 @@
 .DS_Store
 .htaccess
+Applications/API/Modules/Users/
 Web/images/
-Web/admin.php
