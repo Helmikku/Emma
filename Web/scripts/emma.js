@@ -11,6 +11,7 @@ if (typeof Emma == 'undefined') {
 }
 
 Emma.Config = {
+	FACEBOOK_APP_ID: '1553833488197470',
 	IMAGE: {
 		HEIGHT: 540,
 		WIDTH: 720
@@ -115,11 +116,11 @@ Emma.Facebook = {
 	connect: function() {
 		FB.getLoginStatus(function(response) {
 			if (response.status == 'connected') {
-				console.log('Logged in.');
+				Emma.User.signIn();
 			} else {
 				FB.Event.subscribe('auth.statusChange', function(response) {
 					if (response.status == 'connected') {
-						console.log('Logged in.');
+						Emma.User.signIn();
 					}
 				});
 				FB.login();
@@ -128,7 +129,7 @@ Emma.Facebook = {
 	},
 	init: function() {
 		FB.init({
-			appId      : '1553833488197470',
+			appId      : Emma.Config.FACEBOOK_APP_ID,
 			cookie     : true,
 			oauth      : true,
 			status     : true,
@@ -147,6 +148,64 @@ Emma.Me = {
 		Emma.Core.showSection(Emma.Me);
 	}
 };
+
+Emma.User = {
+	me: function() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var response = JSON.parse(xhr.responseText);
+				if (response.success) {
+					console.log('Bienvenue ' + response.name);
+					console.log(response);
+				} else {
+					console.log(response);
+				}
+				Emma.Core.LOADING.style.display = 'none';
+			} else if (xhr.readyState < 4) {
+				Emma.Core.LOADING.style.display = 'block';
+			}
+		};
+		xhr.open('GET', '/api/users/me', true);
+		xhr.send();
+	},
+	signIn: function() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var response = JSON.parse(xhr.responseText);
+				if (response.success) {
+					Emma.User.me();
+				} else {
+					console.log(response);
+				}
+				Emma.Core.LOADING.style.display = 'none';
+			} else if (xhr.readyState < 4) {
+				Emma.Core.LOADING.style.display = 'block';
+			}
+		};
+		xhr.open('GET', '/api/users/signin', true);
+		xhr.send();
+	},
+	signOut: function() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var response = JSON.parse(xhr.responseText);
+				if (response.success) {
+					console.log('À bientôt !');
+				} else {
+					console.log(response);
+				}
+				Emma.Core.LOADING.style.display = 'none';
+			} else if (xhr.readyState < 4) {
+				Emma.Core.LOADING.style.display = 'block';
+			}
+		};
+		xhr.open('GET', '/api/users/signout', true);
+		xhr.send();
+	}
+}
 
 Emma.Works = {
 	LIST: [],

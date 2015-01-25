@@ -2,11 +2,11 @@
 /* Blocs */
 
 #emma {background-color: #cccccc;}
-#emma .header {position: fixed; z-index: 100; top: 0; right: 0; left: 0; height: 70px; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 15px 0 #000000;}
+#emma .header {position: fixed; z-index: 100; top: 0; right: 0; left: 0; height: 50px; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 15px 0 #000000;}
 #emma .header .nav {margin: 0 auto; text-align: center;}
 #emma .header .nav ul {margin: 0;}
 #emma .header .nav ul li {display: inline-block; margin: 0 10px; cursor: pointer;}
-#emma .section {display: none; max-width: 992px; margin: 100px auto; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 5px 0 #cccccc;}
+#emma .section {display: none; max-width: 992px; margin: 75px auto; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 0 5px 0 #cccccc;}
 #emma .section .summary {padding: 16px;}
 #emma .section .summary .work {float: left; position: relative; width: 25%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .section .summary .work .caption {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 5%; background-color: rgba(255, 255, 255, 0.9);}
@@ -20,13 +20,15 @@
 #emma .section .slider .thumbnails .thumbnail {display: block; height: 172px; width: 228px; margin-top: 12px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .section .slider .thumbnails .thumbnail.n0 {margin-top: 0;}
 #emma .clear {clear: both;}
+#emma .english .french {display: none;}
+#emma .french .english {display: none;}
 
 /* Textes */
 
 h1 {font-size: 24px; font-family: Arial; color: #ca139f;}
 h2 {font-size: 18px; font-family: Arial; color: #000000;}
 p {font-size: 14px; font-family: Arial; color: #555555;}
-#emma #header #nav ul li span {line-height: 70px; font-size: 36px; font-family: Arial; color: #000000;}
+#emma #header #nav ul li span {line-height: 50px; font-size: 28px; font-family: Arial; color: #000000;}
 #emma #header #nav ul li:hover span {color: #97006c;}
 #emma #header #nav ul li.active span {color: #ca139f;}
 
