@@ -3,7 +3,7 @@
 	<head>
 		<title>Emma Perrochon</title>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" type="text/css" href="style/emma.css">
+		<link rel="stylesheet" type="text/css" href="/style/emma.css">
 	</head>
 	<body id="emma">
 		<header id="header" class="header">
@@ -283,11 +283,14 @@
 			<button onclick="Emma.Facebook.connect();">FB Connect</button>
 			<button onclick="Emma.User.signOut();">Sign Out</button>
 		</footer>
-		<script src="scripts/emma.js"></script>
+		<script src="/scripts/emma.js"></script>
 		<script>
-			Emma.Works.show();
+			Emma.History.load({state: 'Hello World !'});
 			window.fbAsyncInit = function() {
 				Emma.Facebook.init();
+			};
+			window.onpopstate = function(event) {
+				Emma.History.load(event);
 			};
 			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];

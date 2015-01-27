@@ -81,23 +81,27 @@ Emma.Core = {
 	p: function(text) {
 		return Emma.Core.createElement('p', [], [document.createTextNode(text)], false);
 	},
-	showArticle: function() {
-		Emma.Core.MODULE.SUMMARY.style.display = 'none';
-		Emma.Core.MODULE.ARTICLE.style.display = 'block';
-	},
-	showSection: function(module) {
-		if (Emma.Core.MODULE !== null) {
+	showArticle: function(module) {
+		if (Emma.Core.MODULE !== null && Emma.Core.MODULE !== module) {
 			Emma.Core.MODULE.SECTION.style.display = 'none';
 			Emma.Core.MODULE.TAB.className = 'tab';
-			Emma.Core.showSummary();
 		}
 		Emma.Core.MODULE = module;
+		Emma.Core.MODULE.SUMMARY.style.display = 'none';
+		Emma.Core.MODULE.ARTICLE.style.display = 'block';
 		Emma.Core.MODULE.SECTION.style.display = 'block';
 		Emma.Core.MODULE.TAB.className = 'active tab';
 	},
-	showSummary: function() {
-		Emma.Core.MODULE.ARTICLE.style.display = 'none';
+	showSection: function(module) {
+		if (Emma.Core.MODULE !== null && Emma.Core.MODULE !== module) {
+			Emma.Core.MODULE.SECTION.style.display = 'none';
+			Emma.Core.MODULE.TAB.className = 'tab';
+		}
+		Emma.Core.MODULE = module;
 		Emma.Core.MODULE.SUMMARY.style.display = 'block';
+		Emma.Core.MODULE.ARTICLE.style.display = 'none';
+		Emma.Core.MODULE.SECTION.style.display = 'block';
+		Emma.Core.MODULE.TAB.className = 'active tab';
 	}
 };
 
@@ -108,6 +112,7 @@ Emma.Exhibitions = {
 	ARTICLE: document.getElementById('exhibitions_article'),
 	TAB: document.getElementById('exhibitions_tab'),
 	show: function() {
+		Emma.History.push({section: 'exhibitions'}, 'Exhibitions', '/exhibitions');
 		Emma.Core.showSection(Emma.Exhibitions);
 	}
 };
@@ -139,12 +144,57 @@ Emma.Facebook = {
 	}
 };
 
+Emma.History = {
+	URL: '/',
+	load: function(event) {
+		if (event.state !== null) {
+			console.log('check');
+			var path = window.location.pathname.split('/');
+			if (path[1] == 'exhibitions') {
+				Emma.Core.showSection(Emma.Exhibitions);
+			} else if (path[1] == 'me') {
+				Emma.Core.showSection(Emma.Me);
+			} else if (path[1] == 'works') {
+				if (path.length > 2) {
+					if (Emma.Works.LIST.length === 0) {
+						Emma.Works.init(path[2]);
+					} else {
+						for (var i = 0; i < Emma.Works.LIST.length; i++) {
+							if (Emma.Works.LIST[i].id == path[2]) {
+								Emma.Core.emptyElement(Emma.Works.ARTICLE);
+								Emma.Works.ARTICLE.appendChild(Emma.Works.LIST[i].article());
+								Emma.Core.showArticle(Emma.Works);
+								break;
+							}
+						}
+					}
+				} else {
+					if (Emma.Works.LIST.length === 0) {
+						Emma.Works.init();
+					}
+					Emma.Core.showSection(Emma.Works);
+				}
+			} else {
+				if (Emma.Works.LIST.length === 0) {
+					Emma.Works.init();
+				}
+				Emma.Core.showSection(Emma.Works);
+			}
+		}
+	},
+	push: function(state, title, url) {
+		Emma.History.URL = url;
+		history.pushState(state, title, url);
+	}
+};
+
 Emma.Me = {
 	SECTION: document.getElementById('me'),
 	SUMMARY: document.getElementById('me_summary'),
 	ARTICLE: document.getElementById('me_article'),
 	TAB: document.getElementById('me_tab'),
 	show: function() {
+		Emma.History.push({section: 'me'}, 'Me', '/me');
 		Emma.Core.showSection(Emma.Me);
 	}
 };
@@ -194,6 +244,7 @@ Emma.User = {
 				var response = JSON.parse(xhr.responseText);
 				if (response.success) {
 					console.log('À bientôt !');
+					console.log(response);
 				} else {
 					console.log(response);
 				}
@@ -213,7 +264,7 @@ Emma.Works = {
 	SUMMARY: document.getElementById('works_summary'),
 	ARTICLE: document.getElementById('works_article'),
 	TAB: document.getElementById('works_tab'),
-	init: function() {
+	init: function(id) {
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
@@ -226,6 +277,10 @@ Emma.Works = {
 						var work = new Work (response.works[i]);
 						Emma.Works.LIST.push(work);
 						Emma.Works.SUMMARY.appendChild(work.overview());
+						if (id !== null && id == work.id) {
+							Emma.Works.ARTICLE.appendChild(work.article());
+							Emma.Core.showArticle(Emma.Works);
+						}
 					}
 					Emma.Works.SUMMARY.appendChild(Emma.Core.createElement('div', [{name: 'class', value: 'clear'}], [], false));
 				} else {
@@ -240,6 +295,7 @@ Emma.Works = {
 		xhr.send();
 	},
 	show: function() {
+		Emma.History.push({section: 'works'}, 'Works', '/works');
 		if (Emma.Works.LIST.length === 0) {
 			Emma.Works.init();
 		}
@@ -293,9 +349,10 @@ Work.prototype.overview = function() {
 
 
 Work.prototype.show = function() {
+	Emma.History.push({section: 'works', id: this.id}, this.title, '/works/' + this.id);
 	Emma.Core.emptyElement(Emma.Works.ARTICLE);
 	Emma.Works.ARTICLE.appendChild(this.article());
-	Emma.Core.showArticle();
+	Emma.Core.showArticle(Emma.Works);
 };
 
 
