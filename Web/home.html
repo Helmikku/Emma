@@ -5,18 +5,25 @@
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="/style/emma.css">
 	</head>
-	<body id="emma">
+	<body id="emma" class="english">
 		<header id="header" class="header">
 			<nav id="nav" class="nav">
 				<ul>
+					<li id="home_tab" class="tab" onclick="Emma.Home.show();">
+						<span>emma perrochon</span>
+					</li>
 					<li id="works_tab" class="tab" onclick="Emma.Works.show();">
-						<span>Works</span>
+						<span>selected works</span>
 					</li>
 					<li id="exhibitions_tab" class="tab" onclick="Emma.Exhibitions.show();">
-						<span>Exhibitions</span>
+						<span>exhibitions</span>
 					</li>
 					<li id="me_tab" class="tab" onclick="Emma.Me.show();">
-						<span>About me</span>
+						<span>about</span>
+					</li>
+					<li id="language_tab" class="tab" onclick="document.getElementById('emma').className = document.getElementById('emma').className == 'english' ? 'french' : 'english';">
+						<span class="english">Fr / <b>Eng</b></span>
+						<span class="french"><b>Fr</b> / Eng</span>
 					</li>
 				</ul>
 			</nav>
@@ -28,17 +35,17 @@
 		</section>
 		<section id="exhibitions" class="section">
 			<article id="exhibitions_summary" class="summary">
-				<h1>Work in progress</h1>
-				<p>I'm currently working on this section. Please be patient ;-)</p>
+				<h1 class="english">Work in progress</h1>
+				<p class="english">I'm currently working on this section. Please be patient ;-)</p>
+				<h1 class="french">En construction</h1>
+				<p class="french">Cette rubrique n'est pas terminée, je m'y attèle !</p>
 			</article>
 			<article id="exhibitions_article" class="article"></article>
 		</section>
 		<section id="me" class="section">
-			<article id="me_summary" class="summary english">
+			<article id="me_summary" class="summary">
 				<h1>About me</h1>
 				<h2>CONTACT</h2>
-				<input class="french" onclick="document.getElementById('me_summary').className = 'summary english';" type="button" value="In English" />
-				<input class="english" onclick="document.getElementById('me_summary').className = 'summary french';" type="button" value="En français" />
 				<table>
 					<tr>
 						<td colspan="2">
@@ -279,9 +286,9 @@
 			<article id="me_article" class="article"></article>
 		</section>
 		<footer id="footer" class="footer">
-			<div id="fb-root"></div>
+			<!--<div id="fb-root"></div>
 			<button onclick="Emma.Facebook.connect();">FB Connect</button>
-			<button onclick="Emma.User.signOut();">Sign Out</button>
+			<button onclick="Emma.User.signOut();">Sign Out</button>-->
 		</footer>
 		<script src="/scripts/emma.js"></script>
 		<script>
@@ -292,7 +299,7 @@
 			window.onpopstate = function(event) {
 				Emma.History.load(event);
 			};
-			(function(d, s, id) {
+			/*(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) {
 					return;
@@ -301,7 +308,7 @@
 				js.id = id;
 				js.src = "//connect.facebook.net/en_US/sdk.js";
 				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
+			}(document, 'script', 'facebook-jssdk'));*/
 		</script>
 	</body>
 </html>

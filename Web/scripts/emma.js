@@ -1,3 +1,4 @@
+// Problème lorsqu'on clique plusieurs fois sur la même section
 
 
 // ----------------------------------------------------------------------------------------------------- //
@@ -97,11 +98,15 @@ Emma.Core = {
 			Emma.Core.MODULE.SECTION.style.display = 'none';
 			Emma.Core.MODULE.TAB.className = 'tab';
 		}
-		Emma.Core.MODULE = module;
-		Emma.Core.MODULE.SUMMARY.style.display = 'block';
-		Emma.Core.MODULE.ARTICLE.style.display = 'none';
-		Emma.Core.MODULE.SECTION.style.display = 'block';
-		Emma.Core.MODULE.TAB.className = 'active tab';
+		if (module !== null) {
+			Emma.Core.MODULE = module;
+			Emma.Core.MODULE.SUMMARY.style.display = 'block';
+			Emma.Core.MODULE.ARTICLE.style.display = 'none';
+			Emma.Core.MODULE.SECTION.style.display = 'block';
+			Emma.Core.MODULE.TAB.className = 'active tab';
+		} else {
+
+		}
 	}
 };
 
@@ -147,32 +152,24 @@ Emma.Facebook = {
 Emma.History = {
 	URL: '/',
 	load: function(event) {
-		if (event.state !== null) {
-			console.log('check');
-			var path = window.location.pathname.split('/');
-			if (path[1] == 'exhibitions') {
-				Emma.Core.showSection(Emma.Exhibitions);
-			} else if (path[1] == 'me') {
-				Emma.Core.showSection(Emma.Me);
-			} else if (path[1] == 'works') {
-				if (path.length > 2) {
-					if (Emma.Works.LIST.length === 0) {
-						Emma.Works.init(path[2]);
-					} else {
-						for (var i = 0; i < Emma.Works.LIST.length; i++) {
-							if (Emma.Works.LIST[i].id == path[2]) {
-								Emma.Core.emptyElement(Emma.Works.ARTICLE);
-								Emma.Works.ARTICLE.appendChild(Emma.Works.LIST[i].article());
-								Emma.Core.showArticle(Emma.Works);
-								break;
-							}
+		var path = window.location.pathname.split('/');
+		if (path[1] == 'exhibitions') {
+			Emma.Core.showSection(Emma.Exhibitions);
+		} else if (path[1] == 'me') {
+			Emma.Core.showSection(Emma.Me);
+		} else if (path[1] == 'works') {
+			if (path.length > 2) {
+				if (Emma.Works.LIST.length === 0) {
+					Emma.Works.init(path[2]);
+				} else {
+					for (var i = 0; i < Emma.Works.LIST.length; i++) {
+						if (Emma.Works.LIST[i].id == path[2]) {
+							Emma.Core.emptyElement(Emma.Works.ARTICLE);
+							Emma.Works.ARTICLE.appendChild(Emma.Works.LIST[i].article());
+							Emma.Core.showArticle(Emma.Works);
+							break;
 						}
 					}
-				} else {
-					if (Emma.Works.LIST.length === 0) {
-						Emma.Works.init();
-					}
-					Emma.Core.showSection(Emma.Works);
 				}
 			} else {
 				if (Emma.Works.LIST.length === 0) {
@@ -180,11 +177,21 @@ Emma.History = {
 				}
 				Emma.Core.showSection(Emma.Works);
 			}
+		} else {
+			Emma.Home.show();
 		}
+		//if (event.state !== null) {} else {}
 	},
 	push: function(state, title, url) {
 		Emma.History.URL = url;
 		history.pushState(state, title, url);
+	}
+};
+
+Emma.Home = {
+	show: function() {
+		Emma.History.push({section: 'home'}, 'Home', '/');
+		Emma.Core.showSection(null);
 	}
 };
 
@@ -326,12 +333,14 @@ function Work (data) {
 
 Work.prototype.article = function() {
 	return Emma.Core.createElement('div', [{name: 'class', value: 'work'}], [
-		Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
+		Emma.Core.createElement('div', [{name: 'class', value: 'caption clear'}], [
 			Emma.Core.h1(this.title),
 			Emma.Core.p(this.caption)
 		], false),
 		this.slider(),
-		Emma.Core.p(this.description)
+		Emma.Core.createElement('div', [{name: 'class', value: 'description clear'}], [
+			Emma.Core.p(this.description)
+		], false)
 	], false);
 };
 
