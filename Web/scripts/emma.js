@@ -278,8 +278,6 @@ Emma.Works = {
 				var response = JSON.parse(xhr.responseText);
 				if (response.success) {
 					Emma.Core.emptyElement(Emma.Works.SUMMARY);
-					Emma.Works.SUMMARY.appendChild(Emma.Core.h1(Emma.Config.WORKS.TITLE));
-					Emma.Works.SUMMARY.appendChild(Emma.Core.p(Emma.Config.WORKS.INTRODUCTION));
 					for (var i = 0; i < response.works.length; i++) {
 						var work = new Work (response.works[i]);
 						Emma.Works.LIST.push(work);
