@@ -79,6 +79,11 @@ Emma.Core = {
 	h2: function(text) {
 		return Emma.Core.createElement('h2', [], [document.createTextNode(text)], false);
 	},
+	html: function(html) {
+		var element = Emma.Core.createElement('div', [], [], false);
+		element.innerHTML = html;
+		return element;
+	},
 	p: function(text) {
 		return Emma.Core.createElement('p', [], [document.createTextNode(text)], false);
 	},
@@ -333,11 +338,11 @@ Work.prototype.article = function() {
 	return Emma.Core.createElement('div', [{name: 'class', value: 'work'}], [
 		Emma.Core.createElement('div', [{name: 'class', value: 'caption clear'}], [
 			Emma.Core.h1(this.title),
-			Emma.Core.p(this.caption)
+			Emma.Core.html(this.caption)
 		], false),
 		this.slider(),
 		Emma.Core.createElement('div', [{name: 'class', value: 'description clear'}], [
-			Emma.Core.p(this.description)
+			Emma.Core.html(this.description)
 		], false)
 	], false);
 };
@@ -349,7 +354,7 @@ Work.prototype.overview = function() {
 		Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.thumbnails[0]}, {name: 'title', value: this.title}], [], false),
 		Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
 			Emma.Core.h2(this.title),
-			Emma.Core.p(this.caption)
+			Emma.Core.html(this.caption)
 		], false)
 	], true, 'click', (function() { work.show(); }));
 };

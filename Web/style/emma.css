@@ -1,7 +1,7 @@
 
 /* Blocs */
 
-#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce;}
+#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
 #emma img {display: block; margin: auto; max-width: 100%;}
 #emma .header {position: absolute; z-index: 100; top: 30px; right: 0; left: 0; height: 45px;}
 #emma .header .nav {margin: 0 auto; text-align: center;}
@@ -47,9 +47,24 @@ p {font-size: 14px; font-family: Arial; color: #413f40;}
 #emma #header #nav ul li.active span {color: #000000;}
 #emma #header #nav ul li#language_tab span {font-size: 25px;}
 
+/* Background */
+
+@media only screen and (max-width : 1600px) {
+	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+}
+
+@media only screen and (max-width : 1280px) {
+	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+}
+
+@media only screen and (max-width : 1024px) {
+	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+}
+
 /* Mobile */
 
 @media only screen and (max-width : 760px) {
+	#emma {background: none;}
 	#emma .section .summary .work {height: auto; width: 50%;}
 	#emma .section .slider {height: auto;}
 	#emma .section .slider .images,
