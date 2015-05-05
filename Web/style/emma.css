@@ -1,20 +1,21 @@
 
 /* Blocs */
 
-#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+#emma {min-height: 1280px; min-width: 1024px; margin: 0; background: url("/style/background1980.jpg") center 0 fixed #d3d1ce;}
 #emma img {display: block; margin: auto; max-width: 100%;}
-#emma .header {position: absolute; z-index: 100; top: 30px; right: 0; left: 0; height: 45px;}
+#emma .header {margin: 30px 0;}
 #emma .header .nav {margin: 0 auto; text-align: center;}
 #emma .header .nav ul {margin: 0; padding: 0 32px;}
 #emma .header .nav ul li {display: inline-block; margin: 0 15px; cursor: pointer;}
 #emma .header .nav ul li#home_tab {float: left;}
 #emma .header .nav ul li#language_tab {float: right;}
-#emma .section {display: none; max-width: 992px; margin: 200px auto; background-color: #ffffff;}
+#emma .section {display: none; max-width: 992px; margin: 100px auto; background-color: #ffffff;}
 #emma .section .summary {padding: 16px;}
 #emma .section .summary .work {float: left; position: relative; width: 25%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .section .summary .work .caption {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 5%; background-color: rgba(255, 255, 255, 0.9);}
 #emma .section .summary .work:hover .caption {display: block;}
 #emma .section .article {padding: 16px;}
+#emma .section .article .work .caption {margin: 0 0 30px 0;}
 #emma .section .slider {position: relative; height: 540px;}
 #emma .section .slider .images {position: absolute; top: 0; right: 0; bottom: 0; width: 720px; overflow: hidden;}
 #emma .section .slider .images > div {position: absolute; right: 0; left: 0; transition: top 0.75s; -moz-transition: top 0.75s; -webkit-transition: top 0.75s;}
@@ -49,23 +50,22 @@ p {font-size: 14px; font-family: Arial; color: #413f40;}
 
 /* Background */
 
-@media only screen and (max-width : 1600px) {
-	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
-}
-
 @media only screen and (max-width : 1280px) {
-	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+	#emma {background: url("/style/background1600.jpg") center 0 fixed #d3d1ce;}
 }
 
 @media only screen and (max-width : 1024px) {
-	#emma {background: url("/style/background.jpg") center 0 fixed #d3d1ce; background-size: cover;}
+	#emma {background: url("/style/background1280.jpg") center 0 fixed #d3d1ce;}
 }
 
 /* Mobile */
 
-@media only screen and (max-width : 760px) {
-	#emma {background: none;}
+@media only screen and (max-width : 720px) {
+	#emma {min-height: 0; min-width: 0; background: url("/style/background1024.jpg") center 0 fixed #d3d1ce;}
+	#emma .header {min-width: 0;}
+	#emma .header .nav ul li {float: none!important; display: block; text-align: center;}
 	#emma .section .summary .work {height: auto; width: 50%;}
+	#emma .section .summary .work .caption > div {display: none;}
 	#emma .section .slider {height: auto;}
 	#emma .section .slider .images,
 	#emma .section .slider .images > div {position: static; height: auto !important; width: 100%;}
