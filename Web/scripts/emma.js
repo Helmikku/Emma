@@ -185,7 +185,6 @@ Emma.History = {
 		} else {
 			Emma.Home.show();
 		}
-		//if (event.state !== null) {} else {}
 	},
 	push: function(state, title, url) {
 		Emma.History.URL = url;
@@ -370,24 +369,47 @@ Work.prototype.show = function() {
 
 Work.prototype.slider = function() {
 	var work = this;
-	var images = [Emma.Core.createElement('div', [{name: 'style', value: 'height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false)];
+	var images = Emma.Core.createElement('div', [{name: 'class', value: 'files'}, {name: 'style', value: 'height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false);
+	var next = Emma.Core.createElement('div', [{name: 'class', value: 'next button'}], [
+			Emma.Core.createElement('div', [], [document.createTextNode('>')], true, 'click', (function() {
+				var nextTop = images.offsetTop - Emma.Config.IMAGE.HEIGHT;
+				images.style.top = Math.max(- (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT, nextTop) + 'px';
+				if (nextTop == - (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT) {
+					images.parentNode.className = 'images end';
+				} else {
+					images.parentNode.className = 'images';
+				}
+			}))
+		], false);
+	var previous = Emma.Core.createElement('div', [{name: 'class', value: 'previous button'}], [
+			Emma.Core.createElement('div', [], [document.createTextNode('<')], true, 'click', (function() {
+				var previousTop = images.offsetTop + Emma.Config.IMAGE.HEIGHT;
+				images.style.top = Math.min(0, previousTop) + 'px';
+				if (previousTop == 0) {
+					images.parentNode.className = 'images start';
+				} else {
+					images.parentNode.className = 'images';
+				}
+			}))
+		], false);
 	var thumbnails = [];
 	for (var i = 0; i < this.thumbnails.length; i++) {
 		(function(i) {
-			images[0].appendChild(
+			images.appendChild(
 				Emma.Core.createElement('div', [{name: 'class', value: 'image n' + i}], [
-					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.images[i]}, {name: 'title', value: i + 1}], [], false)
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.images[i]}], [], false)
 				], false)
 			);
 			thumbnails.push(
 				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail n' + i}], [
-					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false)
-				], true, 'click', (function() { images[0].style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px'; }))
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false),
+					Emma.Core.createElement('div', [{name: 'class', value: 'shadow'}], [], false)
+				], true, 'click', (function() { images.style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px'; }))
 			);
 		})(i);
 	}
 	return Emma.Core.createElement('div', [{name: 'class', value: 'slider'}], [
-		Emma.Core.createElement('div', [{name: 'class', value: 'images'}], images, false),
+		Emma.Core.createElement('div', [{name: 'class', value: 'images start'}], [images, previous, next], false),
 		Emma.Core.createElement('div', [{name: 'class', value: 'thumbnails'}], thumbnails, false)
 	], false);
 };
