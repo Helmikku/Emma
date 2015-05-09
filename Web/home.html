@@ -3,59 +3,67 @@
 	<head>
 		<title>Emma Perrochon</title>
 		<meta charset="UTF-8" />
+		<meta name="description" content="Bienvenue sur le site d'Emma Perrochon. Découvrez ici une sélection de ses œuvres ainsi que ses dernières expositions." />
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<link rel="stylesheet" type="text/css" href="/style/emma.css">
 	</head>
 	<body id="emma" class="english">
-		<header id="header" class="header">
-			<nav id="nav" class="nav">
+		<div id="header" class="header">
+			<div id="nav" class="nav">
 				<ul>
 					<li id="home_tab" class="tab" onclick="Emma.Home.show();">
 						<span>emma perrochon</span>
 					</li>
 					<li id="works_tab" class="tab" onclick="Emma.Works.show();">
-						<span>selected works</span>
+						<span class="english">selected works</span>
+						<span class="french">œuvres</span>
 					</li>
 					<li id="exhibitions_tab" class="tab" onclick="Emma.Exhibitions.show();">
-						<span>exhibitions</span>
+						<span class="english">exhibitions</span>
+						<span class="french">expositions</span>
 					</li>
 					<li id="me_tab" class="tab" onclick="Emma.Me.show();">
-						<span>about</span>
+						<span class="english">about</span>
+						<span class="french">à propos</span>
 					</li>
 					<li id="language_tab" class="tab" onclick="document.getElementById('emma').className = document.getElementById('emma').className == 'english' ? 'french' : 'english';">
 						<span class="english">Fr / <b>Eng</b></span>
 						<span class="french"><b>Fr</b> / Eng</span>
 					</li>
 				</ul>
-			</nav>
+			</div>
 			<div id="loading"></div>
-		</header>
-		<section id="works" class="section">
-			<article id="works_summary" class="summary"></article>
-			<article id="works_article" class="article"></article>
-		</section>
-		<section id="exhibitions" class="section">
-			<article id="exhibitions_summary" class="summary">
+		</div>
+		<div id="works" class="section">
+			<div id="works_summary" class="summary"></div>
+			<div id="works_article" class="article"></div>
+		</div>
+		<div id="exhibitions" class="section">
+			<div id="exhibitions_summary" class="summary">
 				<h1 class="english">Work in progress</h1>
 				<p class="english">I'm currently working on this section. Please be patient ;-)</p>
 				<h1 class="french">En construction</h1>
 				<p class="french">Cette rubrique n'est pas terminée, je m'y attèle !</p>
-			</article>
-			<article id="exhibitions_article" class="article"></article>
-		</section>
-		<section id="me" class="section">
-			<article id="me_summary" class="summary">
+			</div>
+			<div id="exhibitions_article" class="article"></div>
+		</div>
+		<div id="me" class="section">
+			<div id="me_summary" class="summary">
 				<table>
 					<tr>
 						<td colspan="2">
-						    <h2 class="english">CONTACT <p class="english">info@emmaperrochon.com
-						    <h2 class="french">CONTACT <p class="french">info@emmaperrochon.com
-						    </td>
-					<tr>
-						<td width="100px">
-							<h2 class="english">EDUCATION</h2>
-							<h2 class="french">FORMATION</h2>
+						    <h1 class="english">Contact</h1>
+						    <p class="english">info@emmaperrochon.com</p>
+						    <h1 class="french">Contact</h1>
+						    <p class="french">info@emmaperrochon.com</p>
 						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<h1 class="english">Education</h1>
+							<h1 class="french">Formation</h1>
+						</td>
+					</tr>
 					<tr>
 						<td width="100px">
 							<span class="year">2011</span>
@@ -94,8 +102,8 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<h2 class="english">EXHIBITIONS</h2>
-							<h2 class="french">EXPOSITIONS</h2>
+							<h1 class="english">Exhibitions</h1>
+							<h1 class="french">Expositions</h1>
 						</td>
 					</tr>
 					<tr>
@@ -103,8 +111,8 @@
 							<span class="year">2014</span>
 						</td>
 						<td>
-							<p class="english"><strong>ONE SHOT</strong> exhibition / meeting around a work at Ergastule, Nancy (FR) <a href="http://ergastule.org/atelier/one-shot-pour-une-oeuvre/">web</a></p>
-							<p class="french"><strong>ONE SHOT</strong> exposition / rencontre autour d’une œuvre à Ergastule, Nancy (FR) <a href="http://ergastule.org/atelier/one-shot-pour-une-oeuvre/"> web </a></p>
+							<p class="english"><strong>ONE SHOT</strong> exhibition / meeting around a work at Ergastule, Nancy (FR) <a href="http://ergastule.org/atelier/one-shot-pour-une-oeuvre/" target="_blank">web</a></p>
+							<p class="french"><strong>ONE SHOT</strong> exposition / rencontre autour d’une œuvre à Ergastule, Nancy (FR) <a href="http://ergastule.org/atelier/one-shot-pour-une-oeuvre/" target="_blank">web</a></p>
 							<p class="english"><strong>Electric night vol.1</strong> collective exhibition organized by le Palais des Paris at the cinema Denkikan in Takasaki (JP)</p>
 							<p class="french"><strong>Electric night vol.1</strong> exposition collective organisée par le Palais des Paris au cinéma Le denkikan de Takasaki (JP)</p>
 							<p class="english"><strong>Mini Bling</strong> collective exhibition at Stall 124, Marché Dauphine, Saint-Ouen, Paris (organized par YIA Art Fair Paris et La GAD Marseille) (FR)</p>
@@ -124,12 +132,12 @@
 							<p class="french"><strong>Préambule</strong> exposition collective au Théâtre du Grütli à Genève (CH)</p>
 							<p class="english"><strong>Cats and Stripes</strong> duo exhibition with Frédéric Sanchez at the Annual gallery, Paris (FR) </p>
 							<p class="french"><strong>Cats and Stripes</strong> exposition en duo avec Frédéric Sanchez à la galerie Annual à Paris (FR)</p>
-							<p class="english"><strong>Eternel Viêt Nam</strong> collective exhibition at the Grande Orangerie du Jardin des Sciences, Dijon (FR) <a href="http://www.l-eclair.fr/expositions.php?id=15">web</a></p>
-							<p class="french"><strong>Eternel Viêt Nam</strong> exposition collective à la Grande Orangerie du Jardin des Sciences, Dijon (FR) <a href="http://www.l-eclair.fr/expositions.php?id=15">web</a></p>
+							<p class="english"><strong>Eternel Viêt Nam</strong> collective exhibition at the Grande Orangerie du Jardin des Sciences, Dijon (FR) <a href="http://www.l-eclair.fr/expositions.php?id=15" target="_blank">web</a></p>
+							<p class="french"><strong>Eternel Viêt Nam</strong> exposition collective à la Grande Orangerie du Jardin des Sciences, Dijon (FR) <a href="http://www.l-eclair.fr/expositions.php?id=15" target="_blank">web</a></p>
 							<p class="english"><strong>Sauvages, étrangères et indigènes</strong> Contemporary art trail on the site of the Heidenkirche, Meisenthal (FR) + group exhibition during the landscape festival in Artopie art space, Meisenthal (FR)</p>
 							<p class="french"><strong>Sauvages, étrangères et indigènes</strong> parcours d’art contemporain sur le site de la Heidenkirche, Meisenthal (FR) + exposition collective dans le cadre du festival des paysages à Artopie, Meisenthal (FR)</p>
-							<p class="english"><strong>Shadow Widow</strong> exhibition in showcase project, duo with Florent Dubois, at La Cité des Arts, Paris (FR) <a href="http://shadow-widow.tumblr.com/"> web </a></p>
-							<p class="french"><strong>Shadow Widow</strong> projet d’exposition en vitrine en duo avec Florent Dubois et Florian Bézut à la Cité des Arts, Paris (FR) <a href="http://shadow-widow.tumblr.com/"> web </a></p>
+							<p class="english"><strong>Shadow Widow</strong> exhibition in showcase project, duo with Florent Dubois, at La Cité des Arts, Paris (FR) <a href="http://shadow-widow.tumblr.com/" target="_blank">web</a></p>
+							<p class="french"><strong>Shadow Widow</strong> projet d’exposition en vitrine en duo avec Florent Dubois et Florian Bézut à la Cité des Arts, Paris (FR) <a href="http://shadow-widow.tumblr.com/" target="_blank">web</a></p>
 						</td>
 					</tr>
 					<tr>
@@ -141,12 +149,12 @@
 							<p class="french"><strong>What Delights The Spirits</strong> exposition en duo avec Frédéric Sanchez à Tadioto Art Space à Hanoï (VN)</p>
 							<p class="english"><strong>Emma*</strong> solo exhibition at OÙ, art space for contemporary art, Marseille (FR) </p>
 							<p class="french"><strong>Emma*</strong> exposition personnelle au lieu d’art OÙ à Marseille (FR)</p>
-							<p class="english"><strong>Cosmotopia</strong> collective exhibition at Le commun (bâtiment d’art contemporain) in Geneva (CH) <a href="http://cosmotopia.tumblr.com/">web</a></p>
-							<p class="french"><strong>Cosmotopia</strong> exposition collective salle Le commun (Bâtiment d’Art Contemporain) à Genève (CH) <a href="http://cosmotopia.tumblr.com/">web</a></p>
+							<p class="english"><strong>Cosmotopia</strong> collective exhibition at Le commun (bâtiment d’art contemporain) in Geneva (CH) <a href="http://cosmotopia.tumblr.com/" target="_blank">web</a></p>
+							<p class="french"><strong>Cosmotopia</strong> exposition collective salle Le commun (Bâtiment d’Art Contemporain) à Genève (CH) <a href="http://cosmotopia.tumblr.com/" target="_blank">web</a></p>
 							<p class="english"><strong>Mulhouse 012</strong> Biennale for contemporary art in Mulhouse (FR)</p>
 							<p class="french"><strong>Mulhouse 012</strong> Biennale d’Art Contemporain à Mulhouse (FR)</p>
-							<p class="english"><strong>Café des Glaces Salon</strong> collective exhibition in Tonnerre (FR) <a href="http://http://www.l-eclair.fr/expositions.php?id=12">web</a></p>
-							<p class="french"><strong>Café des Glaces Salon</strong> exposition collective au Café des Glaces, Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=12">web</a></p>
+							<p class="english"><strong>Café des Glaces Salon</strong> collective exhibition in Tonnerre (FR) <a href="http://http://www.l-eclair.fr/expositions.php?id=12" target="_blank">web</a></p>
+							<p class="french"><strong>Café des Glaces Salon</strong> exposition collective au Café des Glaces, Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=12" target="_blank">web</a></p>
 						</td>
 					</tr>
 					<tr>
@@ -154,8 +162,8 @@
 							<span class="year">2011</span>
 						</td>
 						<td>
-							<p class="english"><strong>Parade</strong> collective exhibition at the Abbey of Notre Dame de Quincy in Burgundy (FR) <a href="http://www.l-eclair.fr/expositions.php?id=7">web</a></p>
-							<p class="french"><strong>Parade</strong> exposition collective à l’Abbaye de Quincy, en collaboration avec le Centre d’Art de l’Yonne (FR) <a href="http://www.l-eclair.fr/expositions.php?id=7">web</a></p>
+							<p class="english"><strong>Parade</strong> collective exhibition at the Abbey of Notre Dame de Quincy in Burgundy (FR) <a href="http://www.l-eclair.fr/expositions.php?id=7" target="_blank">web</a></p>
+							<p class="french"><strong>Parade</strong> exposition collective à l’Abbaye de Quincy, en collaboration avec le Centre d’Art de l’Yonne (FR) <a href="http://www.l-eclair.fr/expositions.php?id=7" target="_blank">web</a></p>
 							<p class="english"><strong>Copie-Right</strong> collective exhibition at the historical Musée des Moulages of Lyon (FR) </p>
 							<p class="french"><strong>Copie-Right</strong> exposition collective au Musée des Moulages de Lyon (FR)</p>
 							<p class="english"><strong>Stock exchange</strong> collective exhibition at the atelier DreiEck in Vienna (AT) </p>
@@ -171,14 +179,14 @@
 							<span class="year">2010</span>
 						</td>
 						<td>
-							<p class="english"><strong>XXIème Biennale Internationale de Création Contemporaine et Céramique (BICC)</strong> at the castle-museum Magnelli of Vallauris (FR) <a href="http://www.vallauris-golfe-juan.fr/2010.html">web</a></p>
-							<p class="french"><strong>XXIème Biennale Internationale de Céramique Contemporaine (BICC)</strong> au Musée Magnelli-Picasso de Vallauris (FR) <a href="http://www.vallauris-golfe-juan.fr/2010.html">web</a></p>
+							<p class="english"><strong>XXIème Biennale Internationale de Création Contemporaine et Céramique (BICC)</strong> at the castle-museum Magnelli of Vallauris (FR) <a href="http://www.vallauris-golfe-juan.fr/2010.html" target="_blank">web</a></p>
+							<p class="french"><strong>XXIème Biennale Internationale de Céramique Contemporaine (BICC)</strong> au Musée Magnelli-Picasso de Vallauris (FR) <a href="http://www.vallauris-golfe-juan.fr/2010.html" target="_blank">web</a></p>
 							<p class="english"><strong>Les péripéties de l’invention</strong> collective exhibition at the gallery Interface in Dijon (FR) </p>
 							<p class="french"><strong>Les péripéties de l’invention</strong> exposition collective à la galerie Interface à Dijon (FR)</p>
 							<p class="english"><strong>Round Robin</strong> workshop/exhibition experimental and collective in a private residence in Dijon (FR) </p>
 							<p class="french"><strong>Round Robin</strong> workshop/exposition collective et expérimentale dans un local privé à Dijon (FR)</p>
-							<p class="english"><strong>Worx</strong> collective exhibition at the Orangerie of Yrouerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=9"> web</a></p>
-							<p class="french"><strong>Worx</strong> exposition collective à l’Orangerie d’Yrouerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=9"> web</a></p>
+							<p class="english"><strong>Worx</strong> collective exhibition at the Orangerie of Yrouerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=9" target="_blank">web</a></p>
+							<p class="french"><strong>Worx</strong> exposition collective à l’Orangerie d’Yrouerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=9" target="_blank">web</a></p>
 							<p class="english"><strong>21000</strong> invitation of Frédéric Sanchez, exhibition of Alliance at the Musée des Beaux-Arts of Dijon (FR)</p>
 							<p class="french"><strong>21000</strong> invitation de Frédéric Sanchez, exposition d’Alliance au Musée des Beaux-Arts de Dijon (FR)</p>
 						</td>
@@ -188,16 +196,16 @@
 							<span class="year">2009</span>
 						</td>
 						<td>
-							<p class="english"><strong>La Maison-Dieu</strong> collective exhibition at the Hôtel-Dieu of Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=6">web</a></p>
+							<p class="english"><strong>La Maison-Dieu</strong> collective exhibition at the Hôtel-Dieu of Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=6" target="_blank">web</a></p>
 							<p class="english"><strong>Entre poire et fromage world tour #3<strong> collective exhibition at the galerie Interface in Dijon (FR)</p>
-							<p class="french"> <strong>La Maison-Dieu</strong> exposition collective à l’Hôtel-Dieu de Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=6">web</a></p>
-							<p class="french"> <strong>Entre poire et fromage world tour #3</strong> exposition collective à la galerie Interface à Dijon (FR)</p>
+							<p class="french"> <strong>La Maison-Dieu</strong> exposition collective à l’Hôtel-Dieu de Tonnerre (FR) <a href="http://www.l-eclair.fr/expositions.php?id=6" target="_blank">web</a></p>
+							<p class="french"><strong>Entre poire et fromage world tour #3</strong> exposition collective à la galerie Interface à Dijon (FR)</p>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<h2 class="english">PRIZES AND RESIDENCIES</h2>
-							<h2 class="french">PRIX ET RÉSIDENCES</h2>
+							<h1 class="english">Prizes and residencies</h1>
+							<h1 class="french">Prix et résidences</h1>
 						</td>
 					</tr>
 					<tr>
@@ -205,8 +213,8 @@
 							<span class="year">2015</span>
 						</td>
 						<td>
-							<p class="english">Residency at La <strong>Fondation Bruckner</strong> in Carouge . Geneva (CH) <a href="http://www.ceramique-bruckner.ch/content/emma-perrochon"> web </a></p>
-							<p class="french">Résidence à la <strong>Fondation Bruckner</strong> à Carouge . Genève (CH) <a href="http://www.ceramique-bruckner.ch/content/emma-perrochon"> web </a></p>
+							<p class="english">Residency at La <strong>Fondation Bruckner</strong> in Carouge . Geneva (CH) <a href="http://www.ceramique-bruckner.ch/content/emma-perrochon" target="_blank">web</a></p>
+							<p class="french">Résidence à la <strong>Fondation Bruckner</strong> à Carouge . Genève (CH) <a href="http://www.ceramique-bruckner.ch/content/emma-perrochon" target="_blank">web</a></p>
 							<p class="english">Residency at <strong>Ergastule</strong>, Nancy (FR)</p>
 							<p class="french">Résidence longue à <strong>Ergastule</strong> Nancy</p>
 						</td>
@@ -244,8 +252,8 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<h2 class="english">EXPERIENCE</h2>
-							<h2 class="french">EXPÉRIENCE</h2>
+							<h1 class="english">Experience</h1>
+							<h1 class="french">Expérience</h1>
 						</td>
 					</tr>
 					<tr>
@@ -253,8 +261,8 @@
 							<span class="year">2008/2015</span>
 						</td>
 						<td>
-							<p class="english">At the initiative, with Frédéric Sanchez, of <strong>«l’Éclair»</strong> (cycle of temporary exhibitions) <a href="www.l-eclair.fr"> web </a></p>
-							<p class="french">À l’initiative, avec Frédéric Sanchez, de la <strong>Galerie l’Éclair</strong> (cycle d’expositions temporaires) <a href="www.l-eclair.fr"> web </a></p>
+							<p class="english">At the initiative, with Frédéric Sanchez, of <strong>«l’Éclair»</strong> (cycle of temporary exhibitions) <a href="http://www.l-eclair.fr/" target="_blank">web</a></p>
+							<p class="french">À l’initiative, avec Frédéric Sanchez, de la <strong>Galerie l’Éclair</strong> (cycle d’expositions temporaires) <a href="http://www.l-eclair.fr/" target="_blank">web</a></p>
 						</td>
 					</tr>
 					<tr>
@@ -289,24 +297,27 @@
 						</td>
 					</tr>
 				</table>
-			</article>
-			<article id="me_article" class="article"></article>
-		</section>
-		<footer id="footer" class="footer">
-			<!--<div id="fb-root"></div>
+			</div>
+			<div id="me_article" class="article"></div>
+		</div>
+		<div id="footer" class="footer">
+		<!--
+			<div id="fb-root"></div>
 			<button onclick="Emma.Facebook.connect();">FB Connect</button>
-			<button onclick="Emma.User.signOut();">Sign Out</button>-->
-		</footer>
-		<script src="/scripts/emma.js"></script>
+			<button onclick="Emma.User.signOut();">Sign Out</button>
+		-->
+		</div>
+		<script src="/scripts/emma.min.js"></script>
 		<script>
-			Emma.History.load({state: 'Hello World !'});
-			window.fbAsyncInit = function() {
-				Emma.Facebook.init();
-			};
+			Emma.History.load({state: 'Welcome !'});
 			window.onpopstate = function(event) {
 				Emma.History.load(event);
 			};
-			/*(function(d, s, id) {
+			/*
+			window.fbAsyncInit = function() {
+				Emma.Facebook.init();
+			};
+			(function(d, s, id) {
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) {
 					return;
@@ -315,7 +326,8 @@
 				js.id = id;
 				js.src = "//connect.facebook.net/en_US/sdk.js";
 				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));*/
+			}(document, 'script', 'facebook-jssdk'));
+			*/
 		</script>
 	</body>
 </html>

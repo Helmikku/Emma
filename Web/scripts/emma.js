@@ -1,4 +1,3 @@
-// Problème lorsqu'on clique plusieurs fois sur la même section
 
 
 // ----------------------------------------------------------------------------------------------------- //
@@ -16,10 +15,6 @@ Emma.Config = {
 	IMAGE: {
 		HEIGHT: 540,
 		WIDTH: 720
-	},
-	WORKS: {
-		TITLE: 'My works',
-		INTRODUCTION: 'Please take a look of my works. They are sorted from the most recent one to the last'
 	}
 };
 
@@ -109,8 +104,6 @@ Emma.Core = {
 			Emma.Core.MODULE.ARTICLE.style.display = 'none';
 			Emma.Core.MODULE.SECTION.style.display = 'block';
 			Emma.Core.MODULE.TAB.className = 'active tab';
-		} else {
-
 		}
 	}
 };
@@ -155,7 +148,7 @@ Emma.Facebook = {
 };
 
 Emma.History = {
-	URL: '/',
+	URL: null,
 	load: function(event) {
 		var path = window.location.pathname.split('/');
 		if (path[1] == 'exhibitions') {
@@ -187,8 +180,10 @@ Emma.History = {
 		}
 	},
 	push: function(state, title, url) {
-		Emma.History.URL = url;
-		history.pushState(state, title, url);
+		if (Emma.History.URL != url && history.pushState) {
+			Emma.History.URL = url;
+			history.pushState(state, title, url);
+		}
 	}
 };
 
@@ -267,7 +262,7 @@ Emma.User = {
 		xhr.open('GET', '/api/users/signout', true);
 		xhr.send();
 	}
-}
+};
 
 Emma.Works = {
 	LIST: [],
@@ -371,7 +366,7 @@ Work.prototype.slider = function() {
 	var work = this;
 	var images = Emma.Core.createElement('div', [{name: 'class', value: 'files'}, {name: 'style', value: 'height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false);
 	var next = Emma.Core.createElement('div', [{name: 'class', value: 'next button'}], [
-			Emma.Core.createElement('div', [], [document.createTextNode('>')], true, 'click', (function() {
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
 				var nextTop = images.offsetTop - Emma.Config.IMAGE.HEIGHT;
 				images.style.top = Math.max(- (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT, nextTop) + 'px';
 				if (nextTop == - (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT) {
@@ -382,10 +377,10 @@ Work.prototype.slider = function() {
 			}))
 		], false);
 	var previous = Emma.Core.createElement('div', [{name: 'class', value: 'previous button'}], [
-			Emma.Core.createElement('div', [], [document.createTextNode('<')], true, 'click', (function() {
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
 				var previousTop = images.offsetTop + Emma.Config.IMAGE.HEIGHT;
 				images.style.top = Math.min(0, previousTop) + 'px';
-				if (previousTop == 0) {
+				if (previousTop === 0) {
 					images.parentNode.className = 'images start';
 				} else {
 					images.parentNode.className = 'images';
@@ -404,7 +399,16 @@ Work.prototype.slider = function() {
 				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail n' + i}], [
 					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false),
 					Emma.Core.createElement('div', [{name: 'class', value: 'shadow'}], [], false)
-				], true, 'click', (function() { images.style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px'; }))
+				], true, 'click', (function() {
+					images.style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px';
+					if (i === 0) {
+						images.parentNode.className = 'images start';
+					} else if (i == work.thumbnails.length - 1) {
+						images.parentNode.className = 'images end';
+					} else {
+						images.parentNode.className = 'images';
+					}
+				}))
 			);
 		})(i);
 	}
