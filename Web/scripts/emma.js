@@ -87,11 +87,16 @@ Emma.Core = {
 			Emma.Core.MODULE.SECTION.style.display = 'none';
 			Emma.Core.MODULE.TAB.className = 'tab';
 		}
-		Emma.Core.MODULE = module;
-		Emma.Core.MODULE.SUMMARY.style.display = 'none';
-		Emma.Core.MODULE.ARTICLE.style.display = 'block';
-		Emma.Core.MODULE.SECTION.style.display = 'block';
-		Emma.Core.MODULE.TAB.className = 'active tab';
+		if (module !== null) {
+			Emma.Core.MODULE = module;
+			Emma.Core.MODULE.SUMMARY.style.display = 'none';
+			Emma.Core.MODULE.ARTICLE.style.display = 'block';
+			Emma.Core.MODULE.SECTION.style.display = 'block';
+			Emma.Core.MODULE.TAB.className = 'active tab';
+			document.getElementById('emma').style.background = '#ffffff';
+		} else {
+			document.getElementById('emma').removeAttribute('style');
+		}
 	},
 	showSection: function(module) {
 		if (Emma.Core.MODULE !== null && Emma.Core.MODULE !== module) {
@@ -104,6 +109,9 @@ Emma.Core = {
 			Emma.Core.MODULE.ARTICLE.style.display = 'none';
 			Emma.Core.MODULE.SECTION.style.display = 'block';
 			Emma.Core.MODULE.TAB.className = 'active tab';
+			document.getElementById('emma').style.background = '#ffffff';
+		} else {
+			document.getElementById('emma').removeAttribute('style');
 		}
 	}
 };
@@ -149,7 +157,7 @@ Emma.Facebook = {
 
 Emma.History = {
 	URL: null,
-	load: function(event) {
+	load: function() {
 		var path = window.location.pathname.split('/');
 		if (path[1] == 'exhibitions') {
 			Emma.Core.showSection(Emma.Exhibitions);

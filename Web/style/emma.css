@@ -3,27 +3,29 @@
 
 #emma {min-width: 1024px; margin: 0; background: url("/style/background1980.jpg") center top fixed #d3d1ce;}
 #emma img {display: block; margin: auto; max-width: 100%;}
-#emma .header {margin: 30px 0;}
+#emma table {border-collapse: collapse; border-spacing: 0;}
+#emma table tr td {padding: 0; vertical-align: top;}
+#emma .header {margin: 32px 0;}
 #emma .header .nav {margin: 0 auto; text-align: center;}
 #emma .header .nav ul {margin: 0; padding: 0 32px;}
-#emma .header .nav ul li {display: inline-block; margin: 0 15px; cursor: pointer;}
+#emma .header .nav ul li {display: inline-block; margin: 0 16px; cursor: pointer;}
 #emma .header .nav ul li#home_tab {float: left;}
 #emma .header .nav ul li#language_tab {float: right;}
-#emma .section {display: none; padding: 100px 0; background-color: #ffffff;}
+#emma .section {display: none; padding: 0 0 100px 0; background-color: #ffffff; border-top: 1px solid #faf8f6;}
 #emma .section .summary {max-width: 960px; margin: auto; padding: 16px;}
 #emma .section .summary .work {float: left; position: relative; width: 25%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .section .summary .work .caption {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 5%; background-color: rgba(255, 255, 255, 0.9);}
 #emma .section .summary .work:hover .caption {display: block;}
 #emma .section .article {max-width: 960px; margin: auto; padding: 16px;}
-#emma .section .slider {position: relative; height: 540px; margin: 15px 0;}
+#emma .section .slider {position: relative; height: 540px; margin: 32px 0;}
 #emma .section .slider .images {position: absolute; top: 0; right: 0; bottom: 0; width: 75%; overflow: hidden;}
 #emma .section .slider .images > div.files {position: absolute; right: 0; left: 0; transition: top 0.75s; -moz-transition: top 0.75s; -webkit-transition: top 0.75s;}
-#emma .section .slider .images > div.button {display: none; position: absolute; top: 10px; left: 50%; height: 30px;}
+#emma .section .slider .images > div.button {display: none; position: absolute; top: 10px; left: 50%; height: 32px;}
 #emma .section .slider .images > div.next.button {top: auto; bottom: 10px;}
 #emma .section .slider .images:hover > div.button {display: block;}
 #emma .section .slider .images.end:hover > div.next.button,
 #emma .section .slider .images.start:hover > div.previous.button {display: none;}
-#emma .section .slider .images > div.button > div {position: absolute; top: 0; left: -15px; height: 30px; width: 30px; border-radius: 50%; background: url("/style/arraytop.png") center center no-repeat; cursor: pointer;}
+#emma .section .slider .images > div.button > div {position: absolute; top: 0; left: -16px; height: 32px; width: 32px; border-radius: 50%; background: url("/style/arraytop.png") center center no-repeat; cursor: pointer;}
 #emma .section .slider .images > div.next.button > div {background: url("/style/arraybottom.png") center center no-repeat;}
 #emma .section .slider .thumbnails {position: absolute; top: 0; bottom: 0; left: 0; width: 25%; overflow-x: hidden; overflow-y: auto;}
 #emma .section .slider .thumbnails .thumbnail {display: block; position: relative; height: 172px; width: 228px; margin-top: 12px; text-align: center; cursor: pointer; overflow: hidden;}
@@ -32,6 +34,7 @@
 #emma .clear {clear: both;}
 #emma.english .french {display: none;}
 #emma.french .english {display: none;}
+#emma #works .summary {padding-top: 32px;}
 
 /* Textes */
 
@@ -46,12 +49,13 @@
 	font-weight: normal;
 	font-style: normal;
 }
-h1 {margin: 15px 0; font-size: 24px; font-weight: normal; font-family: Ancillary Regular, Arial; color: #413f40;}
-h2 {font-size: 18px; font-weight: normal; font-family: Ancillary Regular, Arial; color: #413f40;}
+h1,
+h2 {margin: 16px 0; font-size: 18px; font-weight: normal; font-family: Ancillary Regular, Arial; color: #413f40;}
 p,
 a,
-div {font-size: 14px; font-family: Ancillary Regular, Arial; color: #413f40;}
-#emma #header #nav ul li span {line-height: 45px; font-size: 24px; font-family: Ancillary Regular, Arial; color: #ffffff;}
+span {margin: 0 0 10px 0; font-size: 14px; font-family: Ancillary Regular, Arial; color: #413f40;}
+#emma table tr td h1 {margin: 32px 0;}
+#emma #header #nav ul li span {line-height: 45px; font-size: 23px; font-family: Ancillary Regular, Arial; color: #d3d1ce;}
 #emma #header #nav ul li:hover span {color: #413f40;}
 #emma #header #nav ul li.active span {color: #000000;}
 #emma #header #nav ul li#language_tab span {font-size: 18px;}
