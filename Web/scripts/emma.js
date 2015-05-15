@@ -123,8 +123,8 @@ Emma.Exhibitions = {
 	ARTICLE: document.getElementById('exhibitions_article'),
 	TAB: document.getElementById('exhibitions_tab'),
 	show: function() {
-		Emma.History.push({section: 'exhibitions'}, 'Exhibitions', '/exhibitions');
 		Emma.Core.showSection(Emma.Exhibitions);
+		Emma.History.push({section: 'exhibitions'}, 'Exhibitions', '/exhibitions');
 	}
 };
 
@@ -191,14 +191,16 @@ Emma.History = {
 		if (Emma.History.URL != url && history.pushState) {
 			Emma.History.URL = url;
 			history.pushState(state, title, url);
+			ga('set', 'page', url);
+			ga('send', 'pageview');
 		}
 	}
 };
 
 Emma.Home = {
 	show: function() {
-		Emma.History.push({section: 'home'}, 'Home', '/');
 		Emma.Core.showSection(null);
+		Emma.History.push({section: 'home'}, 'Home', '/');
 	}
 };
 
@@ -208,8 +210,8 @@ Emma.Me = {
 	ARTICLE: document.getElementById('me_article'),
 	TAB: document.getElementById('me_tab'),
 	show: function() {
-		Emma.History.push({section: 'me'}, 'Me', '/me');
 		Emma.Core.showSection(Emma.Me);
+		Emma.History.push({section: 'me'}, 'Me', '/me');
 	}
 };
 
@@ -307,11 +309,11 @@ Emma.Works = {
 		xhr.send();
 	},
 	show: function() {
-		Emma.History.push({section: 'works'}, 'Works', '/works');
 		if (Emma.Works.LIST.length === 0) {
 			Emma.Works.init();
 		}
 		Emma.Core.showSection(Emma.Works);
+		Emma.History.push({section: 'works'}, 'Works', '/works');
 	}
 };
 
@@ -372,33 +374,11 @@ Work.prototype.show = function() {
 
 Work.prototype.slider = function() {
 	var work = this;
-	var images = Emma.Core.createElement('div', [{name: 'class', value: 'files'}, {name: 'style', value: 'height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false);
-	var next = Emma.Core.createElement('div', [{name: 'class', value: 'next button'}], [
-			Emma.Core.createElement('div', [], [], true, 'click', (function() {
-				var nextTop = images.offsetTop - Emma.Config.IMAGE.HEIGHT;
-				images.style.top = Math.max(- (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT, nextTop) + 'px';
-				if (nextTop == - (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT) {
-					images.parentNode.className = 'images end';
-				} else {
-					images.parentNode.className = 'images';
-				}
-			}))
-		], false);
-	var previous = Emma.Core.createElement('div', [{name: 'class', value: 'previous button'}], [
-			Emma.Core.createElement('div', [], [], true, 'click', (function() {
-				var previousTop = images.offsetTop + Emma.Config.IMAGE.HEIGHT;
-				images.style.top = Math.min(0, previousTop) + 'px';
-				if (previousTop === 0) {
-					images.parentNode.className = 'images start';
-				} else {
-					images.parentNode.className = 'images';
-				}
-			}))
-		], false);
+	var images = [Emma.Core.createElement('div', [{name: 'class', value: 'files'}, {name: 'style', value: 'top: 0px; height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false)];
 	var thumbnails = [];
 	for (var i = 0; i < this.thumbnails.length; i++) {
 		(function(i) {
-			images.appendChild(
+			images[0].appendChild(
 				Emma.Core.createElement('div', [{name: 'class', value: 'image n' + i}], [
 					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.images[i]}], [], false)
 				], false)
@@ -408,20 +388,44 @@ Work.prototype.slider = function() {
 					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + work.thumbnails[i]}, {name: 'title', value: i + 1}], [], false),
 					Emma.Core.createElement('div', [{name: 'class', value: 'shadow'}], [], false)
 				], true, 'click', (function() {
-					images.style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px';
+					images[0].style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px';
 					if (i === 0) {
-						images.parentNode.className = 'images start';
+						images[0].parentNode.className = 'images start';
 					} else if (i == work.thumbnails.length - 1) {
-						images.parentNode.className = 'images end';
+						images[0].parentNode.className = 'images end';
 					} else {
-						images.parentNode.className = 'images';
+						images[0].parentNode.className = 'images';
 					}
 				}))
 			);
 		})(i);
 	}
+	if (this.thumbnails.length > 1) {
+		images.push(Emma.Core.createElement('div', [{name: 'class', value: 'next button'}], [
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
+				var nextTop = images[0].offsetTop - Emma.Config.IMAGE.HEIGHT;
+				images[0].style.top = Math.max(- (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT, nextTop) + 'px';
+				if (nextTop == - (work.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT) {
+					images[0].parentNode.className = 'images end';
+				} else {
+					images[0].parentNode.className = 'images';
+				}
+			}))
+		], false));
+		images.push(Emma.Core.createElement('div', [{name: 'class', value: 'previous button'}], [
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
+				var previousTop = images[0].offsetTop + Emma.Config.IMAGE.HEIGHT;
+				images[0].style.top = Math.min(0, previousTop) + 'px';
+				if (previousTop === 0) {
+					images[0].parentNode.className = 'images start';
+				} else {
+					images[0].parentNode.className = 'images';
+				}
+			}))
+		], false));
+	}
 	return Emma.Core.createElement('div', [{name: 'class', value: 'slider'}], [
-		Emma.Core.createElement('div', [{name: 'class', value: 'images start'}], [images, previous, next], false),
+		Emma.Core.createElement('div', [{name: 'class', value: 'images start'}], images, false),
 		Emma.Core.createElement('div', [{name: 'class', value: 'thumbnails'}], thumbnails, false)
 	], false);
 };
