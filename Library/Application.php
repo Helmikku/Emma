@@ -2,11 +2,11 @@
 namespace Library;
 
 class Application {
-	protected $name;
 	protected $config;
 	protected $database;
 	protected $httpRequest;
 	protected $httpResponse;
+	protected $name;
 	protected $user;
 	public function __construct($name) {
 		$this->name = $name;
@@ -15,9 +15,6 @@ class Application {
 		$this->httpRequest = new HTTPRequest($this);
 		$this->httpResponse = new HTTPResponse($this);
 		$this->user = new User($this);
-	}
-	public function name() {
-		return $this->name;
 	}
 	public function config() {
 		return $this->config;
@@ -30,6 +27,9 @@ class Application {
 	}
 	public function httpResponse() {
 		return $this->httpResponse;
+	}
+	public function name() {
+		return $this->name;
 	}
 	public function user() {
 		return $this->user;

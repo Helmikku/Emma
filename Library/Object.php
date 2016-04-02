@@ -8,13 +8,13 @@ abstract class Object implements \ArrayAccess {
 			$this->hydrate($data);
 		}
 	}
+	public function id() {
+		return $this->id;
+	}
 	public function setId($id) {
 		if ((int) $id > 0) {
 			$this->id = $id;
 		}
-	}
-	public function id() {
-		return $this->id;
 	}
 	public function hydrate(array $data) {
 		foreach ($data as $attribute => $value) {

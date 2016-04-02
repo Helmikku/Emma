@@ -1,12 +1,12 @@
 <?php
 namespace Library\Objects;
 
-class Work extends \Library\Object {
+class Exhibition extends \Library\Object {
 	public $caption;
-	public $collection_id;
 	public $date;
 	public $description;
 	public $images;
+	public $place_id;
 	public $thumbnails;
 	public $title;
 	public function caption() {
@@ -16,14 +16,6 @@ class Work extends \Library\Object {
 		$caption = htmlspecialchars($caption);
 		if (!empty($caption) && is_string($caption)) {
 			$this->caption = $caption;
-		}
-	}
-	public function collection_id() {
-		return $this->collection_id;
-	}
-	public function setCollection_id($collection_id) {
-		if ((int) $collection_id > 0) {
-			$this->collection_id = $collection_id;
 		}
 	}
 	public function date() {
@@ -50,6 +42,14 @@ class Work extends \Library\Object {
 			$this->images = $images;
 		}
 	}
+	public function place_id() {
+		return $this->place_id;
+	}
+	public function setPlace_id($place_id) {
+		if ((int) $place_id > 0) {
+			$this->place_id = $place_id;
+		}
+	}
 	public function thumbnails() {
 		return $this->thumbnails;
 	}
@@ -69,6 +69,6 @@ class Work extends \Library\Object {
 		}
 	}
 	public function isValid() {
-		return !(empty($this->title) || empty($this->caption) || empty($this->thumbnails) || empty($this->date) || empty($this->collection_id));
+		return !(empty($this->title) || empty($this->caption) || empty($this->thumbnails) || empty($this->date) || empty($this->place_id));
 	}
 }

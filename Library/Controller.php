@@ -2,28 +2,28 @@
 namespace Library;
 
 abstract class Controller extends ApplicationComponent {
-	protected $page;
-	protected $module;
 	protected $action;
+	protected $module;
+	protected $page;
 	protected $view;
 	public function __construct(Application $app, $module, $action) {
 		parent::__construct($app);
 		$this->page = new Page($app);
-		$this->setModule($module);
 		$this->setAction($action);
+		$this->setModule($module);
 		$this->setView($action);
-	}
-	public function setModule($module) {
-		if (!is_string($module) || empty($module)) {
-			throw new \InvalidArgumentException('Invalid controller module');
-		}
-		$this->module = $module;
 	}
 	public function setAction($action) {
 		if (!is_string($action) || empty($action)) {
 			throw new \InvalidArgumentException('Invalid controller action');
 		}
 		$this->action = $action;
+	}
+	public function setModule($module) {
+		if (!is_string($module) || empty($module)) {
+			throw new \InvalidArgumentException('Invalid controller module');
+		}
+		$this->module = $module;
 	}
 	public function setView($view) {
 		if (!is_string($view) || empty($view)) {

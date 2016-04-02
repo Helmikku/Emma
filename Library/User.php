@@ -21,6 +21,9 @@ class User extends ApplicationComponent {
 	public function attribute($attribute) {
 		return isset($_SESSION[$attribute]) ? $_SESSION[$attribute] : null;
 	}
+	public function setAttribute($attribute, $value) {
+		$_SESSION[$attribute] = $value;
+	}
 	public function id() {
 		return $this->id;
 	}
@@ -29,8 +32,5 @@ class User extends ApplicationComponent {
 	}
 	public function ranking() {
 		return $this->ranking;
-	}
-	public function setAttribute($attribute, $value) {
-		$_SESSION[$attribute] = $value;
 	}
 }

@@ -4,9 +4,8 @@ namespace Applications\API\Modules\Works;
 class WorksController extends \Library\Controller {
 	public function runGet(\Library\HTTPRequest $request) {
 		if ($request->getExists('work_id')) {
-			$works = $this->app->database()->getModelOf('Works')->getWorkById($request->getData('work_id'));
 			$this->page->addVar('success', true);
-			$this->page->addVar('works', $works);
+			$this->page->addVar('works', $this->app->database()->getModelOf('Works')->getWorkById($request->getData('work_id')));
 		} else {
 			$page_size = $this->app->config()->getDefinition('page_size');
 			if ($request->getExists('page_number')) {

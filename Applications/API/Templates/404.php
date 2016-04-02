@@ -1,1 +1,1 @@
-{success: false, error: 'Invalid query'}
+{success: false, error: '404'}

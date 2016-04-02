@@ -10,6 +10,12 @@ class Config extends ApplicationComponent {
 		$this->setDefinitions($app);
 		$this->setRoutes($app);
 	}
+	public function getDefinition($definition) {
+		if (isset($this->definitions[$definition])) {
+			return $this->definitions[$definition];
+		}
+		return null;
+	}
 	public function setDefinitions(Application $app) {
 		$definitions = array();
 		$xml = new \DOMDocument;
@@ -20,6 +26,14 @@ class Config extends ApplicationComponent {
 		}
 		$this->definitions = $definitions;
 	}
+	public function getRoute($url) {
+		foreach ($this->routes as $route) {
+			if ($route->match($url) !== false) {
+				return $route;
+			}
+		}
+		throw new \RuntimeException('Unknown URL', self::NO_ROUTE);
+	}
 	public function setRoutes(Application $app) {
 		$routes = array();
 		$xml = new \DOMDocument;
@@ -29,19 +43,5 @@ class Config extends ApplicationComponent {
 			$routes[] = new Route($element->getAttribute('url'), $element->getAttribute('module'), $element->getAttribute('action'));
 		}
 		$this->routes = $routes;
-	}
-	public function getDefinition($definition) {
-		if (isset($this->definitions[$definition])) {
-			return $this->definitions[$definition];
-		}
-		return null;
-	}
-	public function getRoute($url) {
-		foreach ($this->routes as $route) {
-			if ($route->match($url) !== false) {
-				return $route;
-			}
-		}
-		throw new \RuntimeException('Unknown URL', self::NO_ROUTE);
 	}
 }
