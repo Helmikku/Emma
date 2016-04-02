@@ -6,9 +6,7 @@
 
 
 
-if (typeof Emma == 'undefined') {
-	var Emma = {};
-}
+var Emma = {};
 
 Emma.Config = {
 	FACEBOOK_APP_ID: '1553833488197470',
@@ -122,7 +120,38 @@ Emma.Exhibitions = {
 	SUMMARY: document.getElementById('exhibitions_summary'),
 	ARTICLE: document.getElementById('exhibitions_article'),
 	TAB: document.getElementById('exhibitions_tab'),
+	init: function(id) {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var response = JSON.parse(xhr.responseText);
+				if (response.success && response.exhibitions && response.exhibitions.length) {
+					Emma.Core.emptyElement(Emma.Exhibitions.SUMMARY);
+					for (var i = 0; i < response.exhibitions.length; i++) {
+						var exhibition = new Exhibition (response.exhibitions[i]);
+						Emma.Exhibitions.LIST.push(exhibition);
+						Emma.Exhibitions.SUMMARY.appendChild(exhibition.overview());
+						if (id !== null && id == exhibition.id) {
+							Emma.Exhibitions.ARTICLE.appendChild(exhibition.article());
+							Emma.Core.showArticle(Emma.Exhibitions);
+						}
+					}
+					Emma.Exhibitions.SUMMARY.appendChild(Emma.Core.createElement('div', [{name: 'class', value: 'clear'}], [], false));
+				} else {
+					console.log(response);
+				}
+				Emma.Core.LOADING.style.display = 'none';
+			} else if (xhr.readyState < 4) {
+				Emma.Core.LOADING.style.display = 'block';
+			}
+		};
+		xhr.open('GET', '/api/exhibitions/init', true);
+		xhr.send();
+	},
 	show: function() {
+		if (Emma.Exhibitions.LIST.length === 0) {
+			Emma.Exhibitions.init();
+		}
 		Emma.Core.showSection(Emma.Exhibitions);
 		Emma.History.push({section: 'exhibitions'}, 'Exhibitions', '/exhibitions');
 	}
@@ -145,12 +174,12 @@ Emma.Facebook = {
 	},
 	init: function() {
 		FB.init({
-			appId      : Emma.Config.FACEBOOK_APP_ID,
-			cookie     : true,
-			oauth      : true,
-			status     : true,
-			version    : 'v2.2',
-			xfbml      : false
+			appId: Emma.Config.FACEBOOK_APP_ID,
+			cookie: true,
+			oauth: true,
+			status: true,
+			version: 'v2.2',
+			xfbml: false
 		});
 	}
 };
@@ -158,9 +187,28 @@ Emma.Facebook = {
 Emma.History = {
 	URL: null,
 	load: function() {
+		var i = 0;
 		var path = window.location.pathname.split('/');
 		if (path[1] == 'exhibitions') {
-			Emma.Core.showSection(Emma.Exhibitions);
+			if (path.length > 2) {
+				if (Emma.Exhibitions.LIST.length === 0) {
+					Emma.Exhibitions.init(path[2]);
+				} else {
+					for (i = 0; i < Emma.Exhibitions.LIST.length; i++) {
+						if (Emma.Exhibitions.LIST[i].id == path[2]) {
+							Emma.Core.emptyElement(Emma.Exhibitions.ARTICLE);
+							Emma.Exhibitions.ARTICLE.appendChild(Emma.Exhibitions.LIST[i].article());
+							Emma.Core.showArticle(Emma.Exhibitions);
+							break;
+						}
+					}
+				}
+			} else {
+				if (Emma.Exhibitions.LIST.length === 0) {
+					Emma.Exhibitions.init();
+				}
+				Emma.Core.showSection(Emma.Exhibitions);
+			}
 		} else if (path[1] == 'me') {
 			Emma.Core.showSection(Emma.Me);
 		} else if (path[1] == 'works') {
@@ -168,7 +216,7 @@ Emma.History = {
 				if (Emma.Works.LIST.length === 0) {
 					Emma.Works.init(path[2]);
 				} else {
-					for (var i = 0; i < Emma.Works.LIST.length; i++) {
+					for (i = 0; i < Emma.Works.LIST.length; i++) {
 						if (Emma.Works.LIST[i].id == path[2]) {
 							Emma.Core.emptyElement(Emma.Works.ARTICLE);
 							Emma.Works.ARTICLE.appendChild(Emma.Works.LIST[i].article());
@@ -323,6 +371,112 @@ Emma.Works = {
 // ----------------------------------------------------------------------------------------------------- //
 // ---------------------------------------------- CLASSES ---------------------------------------------- //
 // ----------------------------------------------------------------------------------------------------- //
+
+
+
+function Exhibition (data) {
+	this.id = data.hasOwnProperty('id') ? data.id : null;
+	this.title = data.hasOwnProperty('title') ? data.title : null;
+	this.caption = data.hasOwnProperty('caption') ? data.caption : null;
+	this.description = data.hasOwnProperty('description') ? data.description : null;
+	this.thumbnails = data.hasOwnProperty('thumbnails') ? data.thumbnails.split(',') : [];
+	this.images = data.hasOwnProperty('images') ? data.images.split(',') : [];
+	this.date = data.hasOwnProperty('date') ? data.date : null;
+	this.place_id = data.hasOwnProperty('place_id') ? data.place_id : null;
+}
+
+
+Exhibition.prototype.article = function() {
+	return Emma.Core.createElement('div', [{name: 'class', value: 'exhibition'}], [
+		Emma.Core.createElement('div', [{name: 'class', value: 'caption clear'}], [
+			Emma.Core.h1(this.title),
+			Emma.Core.html(this.caption)
+		], false),
+		this.slider(),
+		Emma.Core.createElement('div', [{name: 'class', value: 'description clear'}], [
+			Emma.Core.html(this.description)
+		], false)
+	], false);
+};
+
+
+Exhibition.prototype.overview = function() {
+	var exhibition = this;
+	return Emma.Core.createElement('div', [{name: 'class', value: 'exhibition'}], [
+		Emma.Core.createElement('img', [{name: 'class', value: 'thumbnail'}, {name: 'src', value: '/images/' + this.thumbnails[0]}, {name: 'title', value: this.title}], [], false),
+		Emma.Core.createElement('div', [{name: 'class', value: 'caption'}], [
+			Emma.Core.h2(this.title),
+			Emma.Core.html(this.caption)
+		], false)
+	], true, 'click', (function() { exhibition.show(); }));
+};
+
+
+Exhibition.prototype.show = function() {
+	Emma.History.push({section: 'exhibitions', id: this.id}, this.title, '/exhibitions/' + this.id);
+	Emma.Core.emptyElement(Emma.Exhibitions.ARTICLE);
+	Emma.Exhibitions.ARTICLE.appendChild(this.article());
+	Emma.Core.showArticle(Emma.Exhibitions);
+};
+
+
+Exhibition.prototype.slider = function() {
+	var exhibition = this;
+	var images = [Emma.Core.createElement('div', [{name: 'class', value: 'files'}, {name: 'style', value: 'top: 0px; height: ' + this.images.length * Emma.Config.IMAGE.HEIGHT + 'px;'}], [], false)];
+	var thumbnails = [];
+	for (var i = 0; i < this.thumbnails.length; i++) {
+		(function(i) {
+			images[0].appendChild(
+				Emma.Core.createElement('div', [{name: 'class', value: 'image n' + i}], [
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + exhibition.images[i]}], [], false)
+				], false)
+			);
+			thumbnails.push(
+				Emma.Core.createElement('div', [{name: 'class', value: 'thumbnail n' + i}], [
+					Emma.Core.createElement('img', [{name: 'src', value: '/images/' + exhibition.thumbnails[i]}, {name: 'title', value: i + 1}], [], false),
+					Emma.Core.createElement('div', [{name: 'class', value: 'shadow'}], [], false)
+				], true, 'click', (function() {
+					images[0].style.top = (-i * Emma.Config.IMAGE.HEIGHT) + 'px';
+					if (i === 0) {
+						images[0].parentNode.className = 'images start';
+					} else if (i == exhibition.thumbnails.length - 1) {
+						images[0].parentNode.className = 'images end';
+					} else {
+						images[0].parentNode.className = 'images';
+					}
+				}))
+			);
+		})(i);
+	}
+	if (this.thumbnails.length > 1) {
+		images.push(Emma.Core.createElement('div', [{name: 'class', value: 'next button'}], [
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
+				var nextTop = images[0].offsetTop - Emma.Config.IMAGE.HEIGHT;
+				images[0].style.top = Math.max(- (exhibition.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT, nextTop) + 'px';
+				if (nextTop == - (exhibition.thumbnails.length - 1) * Emma.Config.IMAGE.HEIGHT) {
+					images[0].parentNode.className = 'images end';
+				} else {
+					images[0].parentNode.className = 'images';
+				}
+			}))
+		], false));
+		images.push(Emma.Core.createElement('div', [{name: 'class', value: 'previous button'}], [
+			Emma.Core.createElement('div', [], [], true, 'click', (function() {
+				var previousTop = images[0].offsetTop + Emma.Config.IMAGE.HEIGHT;
+				images[0].style.top = Math.min(0, previousTop) + 'px';
+				if (previousTop === 0) {
+					images[0].parentNode.className = 'images start';
+				} else {
+					images[0].parentNode.className = 'images';
+				}
+			}))
+		], false));
+	}
+	return Emma.Core.createElement('div', [{name: 'class', value: 'slider'}], [
+		Emma.Core.createElement('div', [{name: 'class', value: 'images start'}], images, false),
+		Emma.Core.createElement('div', [{name: 'class', value: 'thumbnails'}], thumbnails, false)
+	], false);
+};
 
 
 

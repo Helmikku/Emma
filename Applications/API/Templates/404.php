@@ -1,1 +1,1 @@
-{success: false, error: '404'}
+{"success": false, "error": 404}
