@@ -1,4 +1,5 @@
 .DS_Store
 .htaccess
 Applications/API/Modules/Users/
+Database/
 Web/images/
