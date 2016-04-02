@@ -2,7 +2,7 @@
 /* Blocs */
 
 #emma {min-width: 1024px; margin: 0; background: url("/style/background1980.jpg") center top fixed #d3d1ce;}
-#emma img {display: block; margin: auto; max-width: 100%;}
+#emma img {display: block; margin: auto;}
 #emma table {border-collapse: collapse; border-spacing: 0;}
 #emma table tr td {padding: 0; vertical-align: top;}
 #emma .header {margin: 32px 0;}
@@ -13,7 +13,7 @@
 #emma .header .nav ul li#language_tab {float: right;}
 #emma .section {display: none; padding: 0 0 100px 0; background-color: #ffffff; border-top: 1px solid #faf8f6;}
 #emma .section .summary {max-width: 960px; margin: auto; padding: 16px;}
-#emma .section .summary .exhibition {float: left; position: relative; width: 25%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
+#emma .section .summary .exhibition {float: left; position: relative; width: 50%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
 #emma .section .summary .exhibition .caption {display: none; position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 5%; background-color: rgba(255, 255, 255, 0.9);}
 #emma .section .summary .exhibition:hover .caption {display: block;}
 #emma .section .summary .work {float: left; position: relative; width: 25%; height: 180px; text-align: center; cursor: pointer; overflow: hidden;}
@@ -81,7 +81,7 @@ span {margin: 0 0 10px 0; font-size: 14px; font-family: Ancillary Regular, Arial
 	#emma {min-height: 0; min-width: 0; background: url("/style/background1024.jpg") center top fixed #d3d1ce;}
 	#emma .header {min-width: 0;}
 	#emma .header .nav ul li {float: none!important; display: block; text-align: center;}
-	#emma .section .summary .exhibition {height: auto; width: 50%;}
+	#emma .section .summary .exhibition {height: auto; width: 100%;}
 	#emma .section .summary .exhibition .caption > div {display: none;}
 	#emma .section .summary .work {height: auto; width: 50%;}
 	#emma .section .summary .work .caption > div {display: none;}
